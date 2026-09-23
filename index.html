@@ -7,101 +7,201 @@
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 <meta name="apple-mobile-web-app-title" content="RegistroFácil" />
-<meta name="theme-color" content="#0a1a35" />
+<meta name="theme-color" content="#0f766e" />
 <link rel="icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAIAAACyr5FlAAAFGUlEQVR4nO3dvXMVVRjH8bPMrg1FzCY3lloIhSQF6oC8WPFfqOCMMI5o6SjwFzhja2Mpov4X0KgzgQEp9A+gTS7EiiaZ4Vgkw4S7+7t3sy/n2XP8fmar+5Lz7Nknz3m5e5PszU+8A+rk3r+wjgEjlTtH5UC93HmSA/WoHJCoHJCoHJBy51itoB7DCqTcM6xAoHJAYkIKieSAxLACiaUsJCoHJOYckEgOSLlnWIFA5YDEhBQSS1lIDCuQGFYgUTkgUTkgcbMPJFYrkBhWIDEhhUTlgETlgERyQGJYgcRSFhI3+0BizgGJOQckKgckkgMSwwoklrKQqByQuNkHEhNSSAwrkKgckHLHf02AQOWARHJAYkIKicoBiZt9IFE5IPHBGyQmpJAYViBROSBROSCRHJAYViDlnqUsBCoHJOYckEgOSAwrkKgckLiHFBKVAxLfeIPEhBQSwwokKgckKgcklrKQqByQSA5ITEghGWyCbf/+UeAWe7T24W/WIYSTTS78ErK97T8+DtncENYu/modQiDHnPPBjgQywx3kd7hOMzyyyYXbofr0SpiGwli7+LN1CIPLJud/CtDM9p+fBmglsLVQv1dWWMp2kXjXsZTtIPWuo3J0kXjXcbNPe8l3HR+8dZB61zGsdJF41zEh7SD1rqNydHHQddPNL4b46ZMPfhzixzYXbPs8Sd45P1BmuIOcs9w+P+a8D3Ekyfvp5vVBW5huXg90geoOKkd70/tfhmrFpnKwlI3A9P5XkzM/hG+XTbA4mFwmVis9e+tyyzc+uTP/eZPkSHW2aKF1Zuy/d15+WFwmJqS96ZIZDX6CzYT0f3HlomdxmZhzxMImOVjKRsHgMjGsRMJkWGGfIwpG+xxUjigwIYVGckCyGVZYrcTA4jJROWLBhDRmT+503UHns5WULfpktct7+Wwlfl3yYx42waBwsw/mYCkLhaUsNJaywvHV09UHnz99HD6SdnqI3+IyZcvrN8O0tPP3dy3eVduth1mlSLlxq8kZ9RJ/uXGraVi9CvfXBMuNI2fhwp5t+JrelRs3m5xRL/Hvt2VyhPo6pPfO+3L9RvML0PyqB86Pcv1GkzPqJf7DbYU/suVT3xy5e7rZ+ef7ha+p9tdM+V34goGU699WH6yeUS/x17YVUvb6O1/bRlC1u3V35pHaC1/t39feuDRUTEcRe/wvBf0Lxo2PV6iSUPe4eeRpxH9wjC45drfuNenZ2md3t+4Rf4/HqPc5mkwjnj99/Ep9HtPpxB5/ejuksZ/OiOIfdeVoI/bTGVP86X3jLfbTGVH8DCtjM6L4cz+mOjbj+OrphXO6md2CUZ1O7PGPbilbrJ47HN/8TeiZZ4vVc8Tf4xHBhFT9/tX0+yjPJd74R1c5nPPFytmZKKv9WH2kWDlrHnka8b88sqWTn7dJquHtPXvQ/MXFypnhImkn9vidc9nSiWvWMUh7Ow+bvKwo3x86knZijz9bOnHVOoZ59nYezX9BUb4XJpJ2oo4/W3r7M+sYFtv796/qg8Xyu+EjaSfS+OPYBCuWaxeEEUS+L9L4+cYbpAj2OWAljmEFJvg6JCQqBySSAxITUkhUDkijvtkHttK7hxS9Yc4BiTkHJJIDEsMKJCoHJCoHJJaykLjZBxLDCiQmpJCoHJCoHJBIDkjcQwqJygGJm30gUTkgkRyQ2OeAxAdvkKgckJhzQCI5IDGsQOJmH0hUDkgsZSExIYXEsAKJygGJygGJygHpP6+dS71uY9O6AAAAAElFTkSuQmCC" />
 <link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAIAAACyr5FlAAAFGUlEQVR4nO3dvXMVVRjH8bPMrg1FzCY3lloIhSQF6oC8WPFfqOCMMI5o6SjwFzhja2Mpov4X0KgzgQEp9A+gTS7EiiaZ4Vgkw4S7+7t3sy/n2XP8fmar+5Lz7Nknz3m5e5PszU+8A+rk3r+wjgEjlTtH5UC93HmSA/WoHJCoHJCoHJBy51itoB7DCqTcM6xAoHJAYkIKieSAxLACiaUsJCoHJOYckEgOSLlnWIFA5YDEhBQSS1lIDCuQGFYgUTkgUTkgcbMPJFYrkBhWIDEhhUTlgETlgERyQGJYgcRSFhI3+0BizgGJOQckKgckkgMSwwoklrKQqByQuNkHEhNSSAwrkKgckHLHf02AQOWARHJAYkIKicoBiZt9IFE5IPHBGyQmpJAYViBROSBROSCRHJAYViDlnqUsBCoHJOYckEgOSAwrkKgckLiHFBKVAxLfeIPEhBQSwwokKgckKgcklrKQqByQSA5ITEghGWyCbf/+UeAWe7T24W/WIYSTTS78ErK97T8+DtncENYu/modQiDHnPPBjgQywx3kd7hOMzyyyYXbofr0SpiGwli7+LN1CIPLJud/CtDM9p+fBmglsLVQv1dWWMp2kXjXsZTtIPWuo3J0kXjXcbNPe8l3HR+8dZB61zGsdJF41zEh7SD1rqNydHHQddPNL4b46ZMPfhzixzYXbPs8Sd45P1BmuIOcs9w+P+a8D3Ekyfvp5vVBW5huXg90geoOKkd70/tfhmrFpnKwlI3A9P5XkzM/hG+XTbA4mFwmVis9e+tyyzc+uTP/eZPkSHW2aKF1Zuy/d15+WFwmJqS96ZIZDX6CzYT0f3HlomdxmZhzxMImOVjKRsHgMjGsRMJkWGGfIwpG+xxUjigwIYVGckCyGVZYrcTA4jJROWLBhDRmT+503UHns5WULfpktct7+Wwlfl3yYx42waBwsw/mYCkLhaUsNJaywvHV09UHnz99HD6SdnqI3+IyZcvrN8O0tPP3dy3eVduth1mlSLlxq8kZ9RJ/uXGraVi9CvfXBMuNI2fhwp5t+JrelRs3m5xRL/Hvt2VyhPo6pPfO+3L9RvML0PyqB86Pcv1GkzPqJf7DbYU/suVT3xy5e7rZ+ef7ha+p9tdM+V34goGU699WH6yeUS/x17YVUvb6O1/bRlC1u3V35pHaC1/t39feuDRUTEcRe/wvBf0Lxo2PV6iSUPe4eeRpxH9wjC45drfuNenZ2md3t+4Rf4/HqPc5mkwjnj99/Ep9HtPpxB5/ejuksZ/OiOIfdeVoI/bTGVP86X3jLfbTGVH8DCtjM6L4cz+mOjbj+OrphXO6md2CUZ1O7PGPbilbrJ47HN/8TeiZZ4vVc8Tf4xHBhFT9/tX0+yjPJd74R1c5nPPFytmZKKv9WH2kWDlrHnka8b88sqWTn7dJquHtPXvQ/MXFypnhImkn9vidc9nSiWvWMUh7Ow+bvKwo3x86knZijz9bOnHVOoZ59nYezX9BUb4XJpJ2oo4/W3r7M+sYFtv796/qg8Xyu+EjaSfS+OPYBCuWaxeEEUS+L9L4+cYbpAj2OWAljmEFJvg6JCQqBySSAxITUkhUDkijvtkHttK7hxS9Yc4BiTkHJJIDEsMKJCoHJCoHJJaykLjZBxLDCiQmpJCoHJCoHJBIDkjcQwqJygGJm30gUTkgkRyQ2OeAxAdvkKgckJhzQCI5IDGsQOJmH0hUDkgsZSExIYXEsAKJygGJygGJygHpP6+dS71uY9O6AAAAAElFTkSuQmCC" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 <style>
   :root{
-    --bg:#f1f4f8; --surface:#ffffff; --surface2:#e9eef5; --line:#dae1ea;
-    --text:#0c1524; --muted:#556074; --info:#1a3a6b; --info-2:#122b52; --info-bg:#e4ebf5;
-    --success:#0c8a4a; --danger:#d62b3f; --radius:16px; --radius-sm:10px;
-    --shadow:0 1px 3px rgba(12,21,36,.06), 0 10px 30px rgba(12,21,36,.06);
-    --shadow-lg:0 6px 16px rgba(26,58,107,.22), 0 24px 54px rgba(12,21,36,.14);
-    --grad:linear-gradient(135deg, #23477e 0%, #16305c 45%, #0a1a35 100%);
-    --font:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+    --bg:#f3f6f5; --surface:#ffffff; --surface2:#eef3f2; --line:#dde6e3;
+    --text:#0f1f1c; --muted:#5a6b67;
+    --primary:#0f766e; --primary-2:#115e59; --primary-bg:#dcf3ef;
+    --accent:#d97706; --accent-bg:#fdf1dc;
+    --success:#15803d; --danger:#dc2626; --danger-bg:#fde8e8;
+    --radius:18px; --radius-sm:11px;
+    --shadow:0 1px 2px rgba(15,31,28,.05), 0 8px 24px rgba(15,31,28,.06);
+    --shadow-lg:0 8px 20px rgba(15,118,110,.25), 0 24px 50px rgba(15,31,28,.14);
+    --grad:linear-gradient(135deg, #14b8a6 0%, #0f766e 48%, #134e4a 100%);
+    --hero:linear-gradient(135deg, #0f766e 0%, #115e59 50%, #0b3b37 100%);
+    --font:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+    color-scheme:light;
   }
   @media (prefers-color-scheme: dark){
-    :root{ --bg:#070a14; --surface:#0f1424; --surface2:#161d33; --line:#222a44;
-      --text:#eef1f8; --muted:#8b94ad; --info:#5b8bff; --info-2:#3a6bff; --info-bg:#13224a;
-      --success:#34d17e; --danger:#ff6b7d;
-      --shadow:0 1px 3px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.3);
-      --shadow-lg:0 4px 12px rgba(31,92,255,.3), 0 20px 48px rgba(0,0,0,.5);
-      --grad:linear-gradient(135deg, #23477e 0%, #16305c 45%, #050d1f 100%); }
+    :root:not([data-theme="light"]){
+      --bg:#08110f; --surface:#0f1b19; --surface2:#152523;
+      --line:#233532; --text:#e7f0ee; --muted:#8ea39e;
+      --primary:#2dd4bf; --primary-2:#14b8a6; --primary-bg:#0f2f2b;
+      --accent:#fbbf24; --accent-bg:#2e2410;
+      --success:#4ade80; --danger:#f87171; --danger-bg:#3a1515;
+      --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.3);
+      --shadow-lg:0 8px 20px rgba(20,184,166,.18), 0 24px 50px rgba(0,0,0,.5);
+      --hero:linear-gradient(135deg, #0d5f58 0%, #0b3f3b 50%, #061a18 100%);
+      color-scheme:dark;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#08110f; --surface:#0f1b19; --surface2:#152523;
+    --line:#233532; --text:#e7f0ee; --muted:#8ea39e;
+    --primary:#2dd4bf; --primary-2:#14b8a6; --primary-bg:#0f2f2b;
+    --accent:#fbbf24; --accent-bg:#2e2410;
+    --success:#4ade80; --danger:#f87171; --danger-bg:#3a1515;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.3);
+    --shadow-lg:0 8px 20px rgba(20,184,166,.18), 0 24px 50px rgba(0,0,0,.5);
+    --hero:linear-gradient(135deg, #0d5f58 0%, #0b3f3b 50%, #061a18 100%);
+    color-scheme:dark;
   }
   *{ box-sizing:border-box; }
   body{ margin:0; background:var(--bg); color:var(--text); font-family:var(--font); line-height:1.5; -webkit-font-smoothing:antialiased; }
-  .wrap{ max-width:820px; margin:0 auto; padding:0 16px 60px; }
-  .header{ background:var(--grad); margin:0 0 28px; padding:34px 28px 40px; color:#fff; position:relative; overflow:hidden; }
-  .header::before{ content:''; position:absolute; inset:0; background-image:linear-gradient(rgba(255,255,255,.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.05) 1px, transparent 1px); background-size:28px 28px; opacity:.6; }
-  .header::after{ content:''; position:absolute; top:-80px; right:-70px; width:280px; height:280px; border-radius:50%; background:radial-gradient(circle, rgba(255,255,255,.16), transparent 70%); }
-  .header-inner{ display:flex; align-items:center; gap:14px; position:relative; z-index:1; max-width:820px; margin:0 auto; }
-  .logo{ width:54px; height:54px; min-width:54px; border-radius:15px; background:rgba(255,255,255,.18); backdrop-filter:blur(8px); border:1px solid rgba(255,255,255,.3); display:flex; align-items:center; justify-content:center; font-size:29px; box-shadow:0 4px 14px rgba(0,0,0,.2); }
-  .header h1{ font-size:27px; font-weight:800; margin:0; line-height:1.1; letter-spacing:-.03em; }
-  .header p{ font-size:14px; color:rgba(255,255,255,.82); margin:3px 0 0; }
-  .stats{ display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin:-56px auto 28px; position:relative; z-index:2; max-width:820px; }
-  .stat{ background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:18px 16px; text-align:center; box-shadow:var(--shadow); }
-  .stat:first-child{ background:var(--grad); border:none; color:#fff; box-shadow:var(--shadow-lg); }
-  .stat:first-child .lbl{ color:rgba(255,255,255,.85); }
-  .stat .lbl{ font-size:12px; color:var(--muted); margin-bottom:6px; text-transform:uppercase; letter-spacing:.04em; font-weight:600; }
-  .stat .val{ font-size:24px; font-weight:700; letter-spacing:-.02em; }
-  .panel{ background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:20px 22px; margin-bottom:20px; box-shadow:var(--shadow); }
+  .wrap{ max-width:1180px; margin:0 auto; padding:0 16px 60px; }
+
+  /* ---- Cabeçalho ---- */
+  .header{ background:var(--hero); padding:22px 16px 92px; color:#fff; position:relative; overflow:hidden; }
+  .header::before{ content:''; position:absolute; inset:0; background-image:radial-gradient(rgba(255,255,255,.09) 1px, transparent 1px); background-size:22px 22px; }
+  .header::after{ content:''; position:absolute; top:-120px; right:-60px; width:360px; height:360px; border-radius:50%; background:radial-gradient(circle, rgba(45,212,191,.35), transparent 70%); }
+  .header-inner{ display:flex; align-items:center; gap:14px; position:relative; z-index:1; max-width:1180px; margin:0 auto; }
+  .logo{ width:50px; height:50px; min-width:50px; border-radius:15px; background:rgba(255,255,255,.14); border:1px solid rgba(255,255,255,.25); display:flex; align-items:center; justify-content:center; font-size:26px; }
+  .header h1{ font-size:24px; font-weight:800; margin:0; line-height:1.1; letter-spacing:-.03em; }
+  .header p{ font-size:13.5px; color:rgba(255,255,255,.78); margin:3px 0 0; }
+  .header-tools{ display:flex; gap:8px; }
+  .hbtn{ height:38px; min-width:38px; padding:0 14px; font-size:13px; background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.25); color:#fff; }
+  .hbtn:hover{ background:rgba(255,255,255,.2); border-color:rgba(255,255,255,.45); }
+  .hbtn.icon{ padding:0; font-size:16px; }
+  .saudacao{ position:relative; z-index:1; max-width:1180px; margin:26px auto 0; }
+  .saudacao strong{ display:block; font-size:28px; font-weight:800; letter-spacing:-.03em; line-height:1.15; }
+  .saudacao span{ font-size:14px; color:rgba(255,255,255,.78); }
+
+  /* ---- KPIs ---- */
+  .stats{ display:grid; grid-template-columns:1.4fr repeat(5,1fr); gap:12px; margin:-62px 0 22px; position:relative; z-index:2; }
+  .stat{ background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:16px; box-shadow:var(--shadow); min-width:0; }
+  .stat .lbl{ font-size:11.5px; color:var(--muted); margin-bottom:6px; text-transform:uppercase; letter-spacing:.05em; font-weight:600; display:flex; align-items:center; gap:6px; }
+  .stat .val{ font-size:21px; font-weight:700; letter-spacing:-.02em; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .stat.destaque{ background:var(--grad); border:none; color:#fff; box-shadow:var(--shadow-lg); }
+  .stat.destaque .lbl{ color:rgba(255,255,255,.85); }
+  .stat.destaque .val{ font-size:26px; }
+
+  /* ---- Painéis ---- */
+  .panel{ background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:20px; margin-bottom:20px; box-shadow:var(--shadow); min-width:0; }
   .panel h2{ font-size:15px; font-weight:700; margin:0 0 16px; letter-spacing:-.01em; display:flex; align-items:center; gap:9px; }
-  .panel h2::before{ content:''; width:4px; height:16px; border-radius:3px; background:var(--grad); }
-  .form{ display:grid; grid-template-columns:repeat(3, 1fr); gap:12px; }
-  label{ font-size:12px; color:var(--muted); display:block; margin-bottom:5px; }
-  input, select{ width:100%; height:44px; padding:0 14px; font-size:15px; border:1.5px solid var(--line); border-radius:var(--radius-sm); background:var(--surface); color:var(--text); transition:border-color .15s, box-shadow .15s; }
-  select{ cursor:pointer; appearance:none; background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23556074' stroke-width='2.5'><polyline points='6 9 12 15 18 9'/></svg>"); background-repeat:no-repeat; background-position:right 12px center; padding-right:36px; }
-  input:focus, select:focus{ outline:none; border-color:var(--info); box-shadow:0 0 0 4px var(--info-bg); }
-  button{ height:44px; padding:0 18px; font-size:14px; font-weight:600; border:1.5px solid var(--line); border-radius:var(--radius-sm); background:var(--surface); color:var(--text); cursor:pointer; transition:all .15s; }
-  button:hover{ background:var(--surface2); border-color:var(--info); }
+  .panel h2 .ico{ width:30px; height:30px; border-radius:9px; background:var(--primary-bg); display:inline-flex; align-items:center; justify-content:center; font-size:15px; }
+  .layout{ display:grid; grid-template-columns:370px minmax(0,1fr); gap:20px; align-items:start; }
+  .sidebar{ position:sticky; top:16px; }
+  .duo{ display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+  .duo .panel{ margin-bottom:20px; }
+
+  /* ---- Formulários ---- */
+  .form{ display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  .form .full{ grid-column:1 / -1; }
+  label{ font-size:12px; font-weight:500; color:var(--muted); display:block; margin-bottom:5px; }
+  input, select{ width:100%; height:44px; padding:0 13px; font-size:15px; font-family:inherit; border:1.5px solid var(--line); border-radius:var(--radius-sm); background:var(--surface); color:var(--text); transition:border-color .15s, box-shadow .15s; }
+  select{ cursor:pointer; appearance:none; background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%235a6b67' stroke-width='2.5'><polyline points='6 9 12 15 18 9'/></svg>"); background-repeat:no-repeat; background-position:right 12px center; padding-right:36px; }
+  input:focus, select:focus{ outline:none; border-color:var(--primary); box-shadow:0 0 0 4px var(--primary-bg); }
+  button{ height:44px; padding:0 18px; font-size:14px; font-weight:600; font-family:inherit; border:1.5px solid var(--line); border-radius:var(--radius-sm); background:var(--surface); color:var(--text); cursor:pointer; transition:background .15s, border-color .15s, filter .15s, transform .1s; }
+  button:hover{ background:var(--surface2); border-color:var(--primary); }
   button:active{ transform:scale(.97); }
-  .btn-primary{ background:var(--grad); border:none; color:#fff; box-shadow:0 2px 8px rgba(31,92,255,.3); }
+  button:disabled{ opacity:.6; cursor:wait; }
+  .btn-primary{ background:var(--grad); border:none; color:#fff; box-shadow:0 4px 12px rgba(15,118,110,.28); }
   .btn-primary:hover{ filter:brightness(1.08); background:var(--grad); }
-  .actions{ display:grid; grid-template-columns:repeat(4,1fr); gap:10px; }
-  .msg{ font-size:13px; margin-left:10px; font-weight:600; }
-  .periodo{ display:grid; grid-template-columns:1fr 1fr 1fr auto; gap:12px; align-items:end; }
-  .periodo-btns{ display:flex; gap:10px; }
-  .periodo-info{ font-size:13.5px; color:var(--info); margin:16px 0 0; font-weight:600; background:var(--info-bg); padding:12px 14px; border-radius:var(--radius-sm); }
+  .form-acoes{ display:flex; gap:10px; margin-top:16px; }
+  .form-acoes .btn-primary{ flex:1; }
+  .modo-edicao{ display:none; font-size:12.5px; font-weight:600; color:var(--accent); background:var(--accent-bg); padding:8px 12px; border-radius:var(--radius-sm); margin:0 0 14px; }
+  .editando .modo-edicao{ display:block; }
+
+  /* ---- Filtro ---- */
+  .filtro-bar{ display:grid; grid-template-columns:1fr 1fr 1fr auto; gap:12px; align-items:end; }
+  .chips{ display:flex; gap:8px; flex-wrap:wrap; margin-top:14px; }
+  .chip{ height:32px; padding:0 13px; font-size:13px; font-weight:500; border-radius:999px; }
+  .chip.ativo{ background:var(--primary); border-color:var(--primary); color:#fff; }
+  :root[data-theme="dark"] .chip.ativo{ color:#06201d; }
+  @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .chip.ativo{ color:#06201d; } }
+  .periodo-info{ font-size:13.5px; color:var(--primary); margin:14px 0 0; font-weight:600; background:var(--primary-bg); padding:11px 14px; border-radius:var(--radius-sm); }
   .periodo-info:empty{ display:none; }
-  .bar-row{ margin-bottom:14px; }
+
+  /* ---- Rankings ---- */
+  .bar-row{ margin-bottom:13px; }
+  .bar-row:last-child{ margin-bottom:0; }
   .bar-top{ display:flex; justify-content:space-between; font-size:14px; margin-bottom:6px; gap:8px; }
-  .bar-top .nm{ font-weight:600; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-  .bar-top .vl{ color:var(--muted); white-space:nowrap; font-weight:600; }
-  .bar-track{ height:10px; background:var(--surface2); border-radius:6px; overflow:hidden; }
-  .bar-fill{ height:100%; background:var(--grad); border-radius:6px; transition:width .4s ease; }
-  table{ width:100%; font-size:13px; border-collapse:collapse; table-layout:fixed; }
-  th{ text-align:left; color:var(--muted); font-weight:500; padding:8px 4px; }
-  td{ padding:11px 4px; border-top:1px solid var(--line); overflow:hidden; text-overflow:ellipsis; }
-  .del{ height:32px; width:32px; padding:0; display:inline-flex; align-items:center; justify-content:center; color:var(--danger); }
-  .hist-head{ display:flex; align-items:center; justify-content:space-between; gap:8px; margin-bottom:14px; }
-  .filtro{ width:180px; height:36px; }
+  .bar-top .nm{ font-weight:600; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; display:flex; gap:8px; align-items:center; }
+  .bar-top .pos{ font-size:11px; font-weight:700; color:var(--muted); background:var(--surface2); border-radius:6px; padding:1px 6px; }
+  .bar-top .vl{ color:var(--muted); white-space:nowrap; font-weight:600; font-size:13px; }
+  .bar-track{ height:8px; background:var(--surface2); border-radius:6px; overflow:hidden; }
+  .bar-fill{ height:100%; background:var(--grad); border-radius:6px; transition:width .5s ease; }
+  .bar-row:first-child .bar-fill{ background:linear-gradient(90deg, #f59e0b, #d97706); }
+
+  /* ---- Histórico ---- */
+  .hist-head{ display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:14px; flex-wrap:wrap; }
+  .hist-head h2{ margin:0; }
+  .busca{ width:220px; height:38px; font-size:14px; }
+  .tabela-wrap{ overflow-x:auto; }
+  table{ width:100%; font-size:13.5px; border-collapse:collapse; }
+  th{ text-align:left; color:var(--muted); font-weight:600; font-size:11.5px; text-transform:uppercase; letter-spacing:.04em; padding:8px 8px; }
+  td{ padding:11px 8px; border-top:1px solid var(--line); vertical-align:middle; }
+  tbody tr:hover{ background:var(--surface2); }
+  td.num{ font-variant-numeric:tabular-nums; white-space:nowrap; }
+  td.obs{ color:var(--muted); max-width:220px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .tag{ display:inline-block; font-size:12px; font-weight:600; padding:2px 9px; border-radius:999px; background:var(--primary-bg); color:var(--primary); white-space:nowrap; }
+  .row-acoes{ display:flex; gap:6px; justify-content:flex-end; }
+  .ibtn{ height:32px; width:32px; padding:0; display:inline-flex; align-items:center; justify-content:center; font-size:14px; }
+  .ibtn.del:hover{ border-color:var(--danger); background:var(--danger-bg); }
+  .cards-hist{ display:none; }
+  .card-frete{ border:1px solid var(--line); border-radius:var(--radius-sm); padding:12px 14px; margin-bottom:10px; }
+  .card-frete .l1{ display:flex; justify-content:space-between; gap:10px; align-items:center; }
+  .card-frete .loja{ font-weight:700; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .card-frete .valor{ font-weight:700; white-space:nowrap; }
+  .card-frete .l2{ display:flex; justify-content:space-between; align-items:center; gap:10px; margin-top:8px; font-size:12.5px; color:var(--muted); }
+  .mais{ width:100%; margin-top:12px; height:38px; font-size:13px; }
+
   .hint{ font-size:13px; color:var(--muted); margin:0 0 14px; }
-  .empty{ font-size:13px; color:var(--muted); margin:0; }
-  .banner{ background:#fff3cd; color:#664d03; border:1px solid #ffe69c; border-radius:var(--radius-sm); padding:12px 14px; font-size:13px; margin-bottom:24px; }
-  @media (max-width:560px){
-    .stats{ grid-template-columns:1fr 1fr; }
-    .form{ grid-template-columns:1fr; }
-    .actions{ grid-template-columns:1fr 1fr; }
-    .periodo{ grid-template-columns:1fr 1fr; }
-    .periodo-btns{ grid-column:1 / -1; }
-    .periodo-btns button{ flex:1; }
-    .panel{ padding:16px; }
-    button{ min-height:44px; }
-    .filtro{ width:100%; }
-    .hist-head{ flex-direction:column; align-items:stretch; }
-    .obs-col{ display:none; }
+  .empty{ font-size:13px; color:var(--muted); margin:0; padding:14px 0; text-align:center; }
+  .actions{ display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  .banner{ background:var(--accent-bg); color:var(--accent); border:1px solid var(--accent); border-radius:var(--radius-sm); padding:12px 14px; font-size:13px; margin-bottom:20px; }
+
+  /* ---- Toast ---- */
+  .toast{ position:fixed; left:50%; bottom:24px; transform:translate(-50%, 20px); opacity:0; pointer-events:none; background:#0f1f1c; color:#fff; padding:12px 18px; border-radius:12px; font-size:14px; font-weight:600; box-shadow:0 10px 30px rgba(0,0,0,.25); transition:opacity .2s, transform .2s; z-index:2000; display:flex; align-items:center; gap:8px; max-width:calc(100% - 32px); }
+  .toast.show{ opacity:1; transform:translate(-50%, 0); }
+  .toast.erro{ background:#b91c1c; }
+
+  /* ---- Carregando ---- */
+  .skeleton{ height:14px; border-radius:6px; background:linear-gradient(90deg, var(--surface2) 0%, var(--line) 50%, var(--surface2) 100%); background-size:200% 100%; animation:brilho 1.2s infinite; margin-bottom:12px; }
+  @keyframes brilho{ from{ background-position:200% 0; } to{ background-position:-200% 0; } }
+
+  /* ---- Responsivo ---- */
+  @media (max-width:1020px){
+    .stats{ grid-template-columns:repeat(3,1fr); }
+    .layout{ grid-template-columns:1fr; }
+    .sidebar{ position:static; }
   }
-  /* tela de login */
-  .lock{ position:fixed; inset:0; background:var(--grad); display:flex; align-items:center; justify-content:center; z-index:1000; padding:20px; }
-  .lock-card{ background:var(--surface); border-radius:var(--radius); padding:32px 28px; width:100%; max-width:360px; box-shadow:var(--shadow-lg); text-align:center; }
-  .lock-logo{ width:64px; height:64px; border-radius:16px; background:var(--grad); display:flex; align-items:center; justify-content:center; font-size:34px; margin:0 auto 18px; }
-  .lock-card h1{ font-size:21px; font-weight:700; margin:0 0 6px; letter-spacing:-.02em; }
+  @media (max-width:640px){
+    .header{ padding:16px 16px 84px; }
+    .header h1{ font-size:20px; }
+    .header p{ display:none; }
+    .saudacao{ margin-top:18px; }
+    .saudacao strong{ font-size:22px; }
+    .stats{ grid-template-columns:1fr 1fr; gap:10px; }
+    .stat.destaque, .stat:last-child{ grid-column:1 / -1; }
+    .stat .val{ font-size:18px; }
+    .filtro-bar{ grid-template-columns:1fr 1fr; }
+    .filtro-bar .f-vend{ grid-column:1 / -1; }
+    .filtro-bar .f-btns{ grid-column:1 / -1; display:flex; }
+    .filtro-bar .f-btns button{ flex:1; }
+    .duo{ grid-template-columns:1fr; gap:0; }
+    .panel{ padding:16px; }
+    .busca{ width:100%; }
+    .tabela-wrap{ display:none; }
+    .cards-hist{ display:block; }
+  }
+
+  /* ---- Tela de login ---- */
+  .lock{ position:fixed; inset:0; background:var(--hero); display:flex; align-items:center; justify-content:center; z-index:1000; padding:20px; }
+  .lock::before{ content:''; position:absolute; inset:0; background-image:radial-gradient(rgba(255,255,255,.08) 1px, transparent 1px); background-size:22px 22px; }
+  .lock-card{ position:relative; background:var(--surface); border-radius:22px; padding:34px 28px; width:100%; max-width:370px; box-shadow:var(--shadow-lg); text-align:center; }
+  .lock-logo{ width:66px; height:66px; border-radius:18px; background:var(--grad); display:flex; align-items:center; justify-content:center; font-size:34px; margin:0 auto 18px; box-shadow:var(--shadow-lg); }
+  .lock-card h1{ font-size:22px; font-weight:800; margin:0 0 6px; letter-spacing:-.02em; }
   .lock-card p{ font-size:14px; color:var(--muted); margin:0 0 22px; }
   .lock-card input{ text-align:center; margin-bottom:14px; }
   .lock-card button{ width:100%; }
-  .lock-erro{ font-size:13px; color:var(--danger); font-weight:600; margin:12px 0 0; min-height:18px; }
-  .sair{ height:36px; padding:0 14px; font-size:13px; background:transparent; border:1.5px solid rgba(255,255,255,.3); color:#fff; }
-  .sair:hover{ background:rgba(255,255,255,.15); border-color:rgba(255,255,255,.5); }
+  .lock-erro{ font-size:13px; color:var(--danger); font-weight:600; margin:12px 0 0 !important; min-height:18px; }
 </style>
 </head>
 <body>
@@ -120,99 +220,119 @@
 <div class="header">
   <div class="header-inner">
     <div class="logo">🚚</div>
-    <div style="flex:1;">
+    <div style="flex:1; min-width:0;">
       <h1>RegistroFácil</h1>
       <p>Controle de fretes por loja</p>
     </div>
-    <button class="sair" id="btn-sair">Sair</button>
+    <div class="header-tools">
+      <button class="hbtn icon" id="btn-tema" title="Alternar tema claro/escuro" aria-label="Alternar tema">🌙</button>
+      <button class="hbtn" id="btn-sair">Sair</button>
+    </div>
+  </div>
+  <div class="saudacao">
+    <strong id="saudacao">Olá!</strong>
+    <span id="saudacao-sub">Resumo dos fretes</span>
   </div>
 </div>
 
 <div class="wrap">
 
+  <div class="stats">
+    <div class="stat destaque"><div class="lbl">💰 Total em fretes</div><div class="val" id="stat-total">R$ 0,00</div></div>
+    <div class="stat"><div class="lbl">📦 Volume</div><div class="val" id="stat-volume">0</div></div>
+    <div class="stat"><div class="lbl">📐 Custo/caixa</div><div class="val" id="stat-custo">R$ 0,00</div></div>
+    <div class="stat"><div class="lbl">🎯 Ticket médio</div><div class="val" id="stat-ticket">R$ 0,00</div></div>
+    <div class="stat"><div class="lbl">🏪 Lojas</div><div class="val" id="stat-lojas">0</div></div>
+    <div class="stat"><div class="lbl">🧾 Fretes</div><div class="val" id="stat-qtd">0</div></div>
+  </div>
+
   <div id="config-banner" class="banner" style="display:none;">
     Configure suas credenciais do Supabase no topo do arquivo (SUPABASE_URL e SUPABASE_KEY) para ativar o banco compartilhado.
   </div>
 
-  <div class="stats">
-    <div class="stat"><div class="lbl">Total em fretes</div><div class="val" id="stat-total">R$ 0,00</div></div>
-    <div class="stat"><div class="lbl">Volume total</div><div class="val" id="stat-volume">0</div></div>
-    <div class="stat"><div class="lbl">Lojas atendidas</div><div class="val" id="stat-lojas">0</div></div>
-    <div class="stat"><div class="lbl">Fretes lançados</div><div class="val" id="stat-qtd">0</div></div>
-  </div>
-
   <div class="panel">
-    <h2>Filtrar</h2>
-    <div class="periodo">
-      <div><label>Data inicial</label><input type="date" id="f-ini" /></div>
-      <div><label>Data final</label><input type="date" id="f-fim" /></div>
-      <div><label>Vendedor</label><select id="f-vendedor"><option value="">Todos</option><option value="Warley">Warley</option><option value="Pedro">Pedro</option><option value="Ricardo">Ricardo</option><option value="Alemão">Alemão</option></select></div>
-      <div class="periodo-btns">
-        <button id="btn-filtrar" class="btn-primary">Filtrar</button>
-        <button id="btn-limpar">Limpar</button>
-      </div>
+    <h2><span class="ico">🔎</span>Filtrar</h2>
+    <div class="filtro-bar">
+      <div><label for="f-ini">Data inicial</label><input type="date" id="f-ini" /></div>
+      <div><label for="f-fim">Data final</label><input type="date" id="f-fim" /></div>
+      <div class="f-vend"><label for="f-vendedor">Vendedor</label><select id="f-vendedor"><option value="">Todos</option><option value="Warley">Warley</option><option value="Pedro">Pedro</option><option value="Ricardo">Ricardo</option><option value="Alemão">Alemão</option></select></div>
+      <div class="f-btns"><button id="btn-limpar">Limpar filtros</button></div>
+    </div>
+    <div class="chips" id="chips">
+      <button class="chip" data-periodo="hoje">Hoje</button>
+      <button class="chip" data-periodo="7d">Últimos 7 dias</button>
+      <button class="chip" data-periodo="mes">Este mês</button>
+      <button class="chip" data-periodo="mes-ant">Mês passado</button>
+      <button class="chip" data-periodo="ano">Este ano</button>
+      <button class="chip ativo" data-periodo="tudo">Tudo</button>
     </div>
     <p class="periodo-info" id="periodo-info"></p>
   </div>
 
-  <div class="panel">
-    <h2>Novo frete</h2>
-    <div class="form">
-      <div><label>Vendedor *</label><select id="in-vendedor"><option value="">Selecione...</option><option value="Warley">Warley</option><option value="Pedro">Pedro</option><option value="Ricardo">Ricardo</option><option value="Alemão">Alemão</option></select></div>
-      <div><label>Loja</label><input type="text" id="in-loja" placeholder="Ex: Nagumo" /></div>
-      <div><label>Valor (R$)</label><input type="number" id="in-valor" placeholder="0,00" step="0.01" min="0" /></div>
-      <div><label>Volume (caixas)</label><input type="number" id="in-volume" placeholder="0" step="1" min="0" /></div>
-      <div><label>Data</label><input type="date" id="in-data" /></div>
-      <div><label>Observação</label><input type="text" id="in-obs" placeholder="Opcional" /></div>
-    </div>
-    <div style="display:flex; align-items:center; gap:10px; margin-top:14px; flex-wrap:wrap;">
-      <button class="btn-primary" id="btn-add">Salvar frete</button>
-      <span class="msg" id="msg"></span>
-    </div>
-  </div>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="panel" id="painel-form">
+        <h2><span class="ico" id="form-ico">➕</span><span id="form-titulo">Novo frete</span></h2>
+        <p class="modo-edicao">✏️ Editando um frete já lançado. Salve para atualizar ou cancele.</p>
+        <div class="form">
+          <div class="full"><label for="in-vendedor">Vendedor *</label><select id="in-vendedor"><option value="">Selecione...</option><option value="Warley">Warley</option><option value="Pedro">Pedro</option><option value="Ricardo">Ricardo</option><option value="Alemão">Alemão</option></select></div>
+          <div class="full"><label for="in-loja">Loja *</label><input type="text" id="in-loja" placeholder="Ex: Nagumo" list="lista-lojas" autocomplete="off" /><datalist id="lista-lojas"></datalist></div>
+          <div><label for="in-valor">Valor (R$) *</label><input type="number" id="in-valor" placeholder="0,00" step="0.01" min="0" inputmode="decimal" /></div>
+          <div><label for="in-volume">Volume (caixas)</label><input type="number" id="in-volume" placeholder="0" step="1" min="0" inputmode="numeric" /></div>
+          <div class="full"><label for="in-data">Data</label><input type="date" id="in-data" /></div>
+          <div class="full"><label for="in-obs">Observação</label><input type="text" id="in-obs" placeholder="Opcional" /></div>
+        </div>
+        <div class="form-acoes">
+          <button class="btn-primary" id="btn-add">Salvar frete</button>
+          <button id="btn-cancelar" style="display:none;">Cancelar</button>
+        </div>
+      </div>
 
-  <div class="panel">
-    <h2 id="grafico-titulo">Evolução mensal</h2>
-    <div style="position:relative; width:100%; height:240px;">
-      <canvas id="grafico" role="img" aria-label="Gráfico de evolução dos fretes"></canvas>
-    </div>
-  </div>
+      <div class="panel">
+        <h2><span class="ico">📄</span>Relatórios e dados</h2>
+        <p class="hint">Os relatórios usam os filtros aplicados acima.</p>
+        <div class="actions">
+          <button id="btn-excel">📊 Excel</button>
+          <button id="btn-pdf">📄 PDF</button>
+          <button id="btn-export">⬇️ Exportar</button>
+          <button id="btn-import">⬆️ Importar</button>
+          <input type="file" id="file-import" accept=".json" style="display:none;" />
+        </div>
+      </div>
+    </aside>
 
-  <div class="panel">
-    <h2>Total por loja</h2>
-    <div id="por-loja"></div>
-  </div>
+    <main>
+      <div class="panel">
+        <h2><span class="ico">📈</span><span id="grafico-titulo">Evolução mensal</span></h2>
+        <div style="position:relative; width:100%; height:260px;">
+          <canvas id="grafico" role="img" aria-label="Gráfico de evolução dos fretes"></canvas>
+        </div>
+      </div>
 
-  <div class="panel">
-    <h2>Total por vendedor</h2>
-    <div id="por-vendedor"></div>
-  </div>
+      <div class="duo">
+        <div class="panel">
+          <h2><span class="ico">🏪</span>Total por loja</h2>
+          <div id="por-loja"><div class="skeleton"></div><div class="skeleton" style="width:70%"></div><div class="skeleton" style="width:50%"></div></div>
+        </div>
+        <div class="panel">
+          <h2><span class="ico">👤</span>Total por vendedor</h2>
+          <div id="por-vendedor"><div class="skeleton"></div><div class="skeleton" style="width:70%"></div><div class="skeleton" style="width:50%"></div></div>
+        </div>
+      </div>
 
-  <div class="panel">
-    <div class="hist-head">
-      <h2 style="margin:0;">Histórico <span id="hist-contador" style="color:var(--muted); font-weight:500; font-size:13px;"></span></h2>
-      <button id="btn-toggle-hist">Ver lançamentos</button>
-    </div>
-    <div id="hist-wrap" style="display:none;">
-      <input type="text" id="in-filtro" class="filtro" placeholder="Filtrar loja..." style="margin-bottom:14px;" />
-      <div id="historico"></div>
-    </div>
-  </div>
-
-  <div class="panel" style="background:var(--surface2);">
-    <h2>Relatórios e dados</h2>
-    <p class="hint">Gere relatórios ou exporte/importe o banco.</p>
-    <div class="actions">
-      <button id="btn-excel">Excel</button>
-      <button id="btn-pdf">PDF</button>
-      <button id="btn-export">Exportar</button>
-      <button id="btn-import">Importar</button>
-      <input type="file" id="file-import" accept=".json" style="display:none;" />
-    </div>
-    <span class="msg" id="msg2" style="display:block; margin:10px 0 0;"></span>
+      <div class="panel">
+        <div class="hist-head">
+          <h2><span class="ico">🧾</span>Lançamentos <span id="hist-contador" style="color:var(--muted); font-weight:500; font-size:13px;"></span></h2>
+          <input type="search" id="in-filtro" class="busca" placeholder="Buscar loja, vendedor ou obs..." />
+        </div>
+        <div id="historico"><div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div></div>
+      </div>
+    </main>
   </div>
 
 </div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
@@ -236,6 +356,27 @@ const SENHA_APP = "realbrasil01";
 /* ================================================================= */
 
 (function(){
+  // ---- Tema claro/escuro (lembra a escolha no aparelho) ----
+  const TEMA_KEY = 'registrofacil_tema';
+  const btnTema = document.getElementById('btn-tema');
+  const temaEscuro = () => {
+    const t = document.documentElement.getAttribute('data-theme');
+    if(t) return t === 'dark';
+    return window.matchMedia('(prefers-color-scheme: dark)').matches;
+  };
+  function aplicarTema(t){
+    if(t) document.documentElement.setAttribute('data-theme', t);
+    btnTema.textContent = temaEscuro() ? '☀️' : '🌙';
+    document.querySelector('meta[name="theme-color"]').setAttribute('content', temaEscuro() ? '#061a18' : '#0f766e');
+  }
+  try { aplicarTema(localStorage.getItem(TEMA_KEY)); } catch(e){ aplicarTema(null); }
+  btnTema.onclick = ()=>{
+    const novo = temaEscuro() ? 'light' : 'dark';
+    aplicarTema(novo);
+    try { localStorage.setItem(TEMA_KEY, novo); } catch(e){}
+    document.dispatchEvent(new Event('tema-mudou'));
+  };
+
   // ---- Controle de acesso (senha única, lembra no aparelho) ----
   const AUTH_KEY = 'registrofacil_acesso';
   const lock = document.getElementById('lock');
@@ -279,17 +420,31 @@ const SENHA_APP = "realbrasil01";
     document.getElementById('config-banner').style.display = 'block';
   }
 
+  const $ = id => document.getElementById(id);
   let registros = [];
   let chart = null;
-  const isMobile = () => window.matchMedia('(max-width:560px)').matches;
+  let editandoId = null;
+  let limiteHist = 30;
+  const isMobile = () => window.matchMedia('(max-width:640px)').matches;
   const fmt = n => 'R$ ' + Number(n).toLocaleString('pt-BR', {minimumFractionDigits:2, maximumFractionDigits:2});
-  const today = () => new Date().toISOString().slice(0,10);
+  // data local (evita "pular" para o dia seguinte à noite por causa do fuso UTC)
+  const isoLocal = d => `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+  const today = () => isoLocal(new Date());
   const fmtData = d => { if(!d) return '—'; const [y,m,day]=d.split('-'); return `${day}/${m}/${y}`; };
   const MESES = ['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
   const mesLabel = ym => { const [y,m]=ym.split('-'); return `${MESES[+m-1]}/${y.slice(2)}`; };
   const esc = s => String(s).replace(/[&<>"]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  const cssVar = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
 
-  document.getElementById('in-data').value = today();
+  $('in-data').value = today();
+
+  // saudação conforme a hora do dia
+  (function(){
+    const h = new Date().getHours();
+    $('saudacao').textContent = h < 12 ? 'Bom dia! ☀️' : h < 18 ? 'Boa tarde! 👋' : 'Boa noite! 🌙';
+    const d = new Date();
+    $('saudacao-sub').textContent = d.toLocaleDateString('pt-BR', {weekday:'long', day:'numeric', month:'long', year:'numeric'});
+  })();
 
   async function load(){
     if(!db){ render(); return; }
@@ -299,17 +454,20 @@ const SENHA_APP = "realbrasil01";
     render();
   }
 
-  function flash(text, err, id){
-    const m = document.getElementById(id||'msg');
-    m.textContent = text;
-    m.style.color = err ? 'var(--danger)' : 'var(--success)';
-    setTimeout(()=>{ m.textContent=''; }, 3000);
+  let toastT;
+  function flash(text, err){
+    const t = $('toast');
+    t.textContent = (err ? '⚠️ ' : '✅ ') + text;
+    t.classList.toggle('erro', !!err);
+    t.classList.add('show');
+    clearTimeout(toastT);
+    toastT = setTimeout(()=>t.classList.remove('show'), 3000);
   }
 
   function filtrados(){
-    const ini = document.getElementById('f-ini').value;
-    const fim = document.getElementById('f-fim').value;
-    const vend = (document.getElementById('f-vendedor').value||'').trim().toLowerCase();
+    const ini = $('f-ini').value;
+    const fim = $('f-fim').value;
+    const vend = ($('f-vendedor').value||'').trim().toLowerCase();
     return registros.filter(r=>{
       if(vend && (r.vendedor||'').toLowerCase() !== vend) return false;
       if(!r.data) return !ini && !fim;
@@ -339,17 +497,17 @@ const SENHA_APP = "realbrasil01";
     const map = {};
     filtrados().forEach(r=>{ if(r.data) map[r.data]=(map[r.data]||0)+Number(r.valor); });
     // determina o intervalo: usa o filtro, ou o min/max dos dados
-    let chaves = Object.keys(map);
-    let dataIni = ini || (chaves.length ? chaves.sort()[0] : null);
-    let dataFim = fim || (chaves.length ? chaves.sort()[chaves.length-1] : null);
+    const chaves = Object.keys(map).sort();
+    const dataIni = ini || chaves[0];
+    const dataFim = fim || chaves[chaves.length-1];
     if(!dataIni || !dataFim) return [];
     // gera todos os dias do intervalo (preenche zeros)
     const out = [];
-    let d = new Date(dataIni+'T00:00:00');
+    const d = new Date(dataIni+'T00:00:00');
     const end = new Date(dataFim+'T00:00:00');
     let guard = 0;
     while(d <= end && guard < 400){
-      const iso = d.toISOString().slice(0,10);
+      const iso = isoLocal(d);
       out.push([iso, map[iso]||0]);
       d.setDate(d.getDate()+1);
       guard++;
@@ -359,33 +517,38 @@ const SENHA_APP = "realbrasil01";
   const diaLabel = iso => { const [,m,d]=iso.split('-'); return `${d}/${m}`; };
 
   function renderChart(){
-    const ini = document.getElementById('f-ini').value;
-    const fim = document.getElementById('f-fim').value;
+    const ini = $('f-ini').value;
+    const fim = $('f-fim').value;
     const modoDia = !!(ini || fim);
-    const tit = document.getElementById('grafico-titulo');
-    if(tit) tit.textContent = modoDia ? 'Evolução diária' : 'Evolução mensal';
+    $('grafico-titulo').textContent = modoDia ? 'Evolução diária' : 'Evolução mensal';
     const dados = modoDia ? totaisPorDia(ini, fim) : totaisPorMes();
     const labels = dados.map(d => modoDia ? diaLabel(d[0]) : mesLabel(d[0]));
     const vals = dados.map(d => Math.round(d[1]*100)/100);
-    const ctx = document.getElementById('grafico');
+    const ctx = $('grafico');
     if(chart) chart.destroy();
+    const escuro = temaEscuro();
+    const corTexto = cssVar('--muted');
     // gradiente vertical nas barras
-    const g = ctx.getContext('2d');
-    const grad = g.createLinearGradient(0,0,0,240);
-    grad.addColorStop(0,'#23477e'); grad.addColorStop(1,'#16305c');
+    const grad = ctx.getContext('2d').createLinearGradient(0,0,0,260);
+    grad.addColorStop(0, escuro ? '#2dd4bf' : '#14b8a6'); grad.addColorStop(1, escuro ? '#0f766e' : '#115e59');
     chart = new Chart(ctx, {
       type:'bar',
-      data:{ labels, datasets:[{ data:vals, backgroundColor:grad, borderRadius:8, maxBarThickness:modoDia?34:48 }] },
-      plugins:[{
-        id:'fundoBranco',
-        beforeDraw:(c)=>{ const cx=c.ctx; cx.save(); cx.globalCompositeOperation='destination-over'; cx.fillStyle='#ffffff'; cx.fillRect(0,0,c.width,c.height); cx.restore(); }
-      }],
+      data:{ labels, datasets:[{ data:vals, backgroundColor:grad, hoverBackgroundColor:'#f59e0b', borderRadius:8, maxBarThickness:modoDia?30:46 }] },
       options:{ responsive:true, maintainAspectRatio:false,
-        plugins:{ legend:{display:false}, tooltip:{ callbacks:{ label:c=>'R$ '+c.parsed.y.toLocaleString('pt-BR',{minimumFractionDigits:2}) } } },
-        scales:{ x:{ grid:{display:false}, ticks:{ autoSkip:modoDia, maxRotation:45, font:{size:isMobile()?10:12} } },
-                 y:{ beginAtZero:true, grid:{color:'rgba(120,140,180,.12)'}, ticks:{ callback:v=>'R$ '+v.toLocaleString('pt-BR'), font:{size:isMobile()?10:12} } } }
+        plugins:{ legend:{display:false}, tooltip:{ backgroundColor:'#0f1f1c', padding:10, cornerRadius:8, displayColors:false, callbacks:{ label:c=>'R$ '+c.parsed.y.toLocaleString('pt-BR',{minimumFractionDigits:2}) } } },
+        scales:{ x:{ grid:{display:false}, border:{display:false}, ticks:{ color:corTexto, autoSkip:modoDia, maxRotation:45, font:{family:'Inter', size:isMobile()?10:12} } },
+                 y:{ beginAtZero:true, border:{display:false}, grid:{color:escuro?'rgba(255,255,255,.06)':'rgba(15,31,28,.07)'}, ticks:{ color:corTexto, callback:v=>'R$ '+v.toLocaleString('pt-BR'), font:{family:'Inter', size:isMobile()?10:12} } } }
       }
     });
+  }
+
+  function barras(lista){
+    const max = lista.length ? lista[0].total : 1;
+    if(!lista.length) return '<p class="empty">Nenhum frete no período.</p>';
+    return lista.map((x,i)=>{
+      const pct = max > 0 ? Math.max(2, Math.round((x.total/max)*100)) : 0;
+      return `<div class="bar-row"><div class="bar-top"><span class="nm"><span class="pos">${i+1}º</span>${esc(x.nome)}</span><span class="vl">${fmt(x.total)}${x.extra?` · ${x.extra}`:''}</span></div><div class="bar-track"><div class="bar-fill" style="width:${pct}%"></div></div></div>`;
+    }).join('');
   }
 
   function render(){
@@ -393,131 +556,197 @@ const SENHA_APP = "realbrasil01";
     const total = base.reduce((s,r)=>s+Number(r.valor),0);
     const volumeTotal = base.reduce((s,r)=>s+(Number(r.volume)||0),0);
     const lojasArr = totaisPorLoja();
-    document.getElementById('stat-total').textContent = fmt(total);
-    document.getElementById('stat-volume').textContent = volumeTotal.toLocaleString('pt-BR');
-    document.getElementById('stat-lojas').textContent = lojasArr.length;
-    document.getElementById('stat-qtd').textContent = base.length;
+    $('stat-total').textContent = fmt(total);
+    $('stat-volume').textContent = volumeTotal.toLocaleString('pt-BR');
+    $('stat-custo').textContent = volumeTotal > 0 ? fmt(total/volumeTotal) : '—';
+    $('stat-ticket').textContent = base.length ? fmt(total/base.length) : '—';
+    $('stat-lojas').textContent = lojasArr.length;
+    $('stat-qtd').textContent = base.length;
 
-    // total por vendedor (painel)
-    const porVend = totaisPorVendedor();
-    const maxV = porVend.length ? porVend[0].total : 1;
-    const cv = document.getElementById('por-vendedor');
-    if(cv){
-      cv.innerHTML = !porVend.length ? '<p class="empty">Nenhum frete no período.</p>' :
-        porVend.map(v=>{
-          const pct = Math.round((v.total/maxV)*100);
-          return `<div class="bar-row"><div class="bar-top"><span class="nm">${esc(v.vendedor)}</span><span class="vl">${fmt(v.total)} · ${v.qtd} frete(s)</span></div><div class="bar-track"><div class="bar-fill" style="width:${pct}%"></div></div></div>`;
-        }).join('');
-    }
+    // sugestões de lojas já cadastradas
+    const lojasUnicas = [...new Set(registros.map(r=>r.loja).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'pt-BR'));
+    $('lista-lojas').innerHTML = lojasUnicas.map(l=>`<option value="${esc(l)}"></option>`).join('');
 
-    const ini = document.getElementById('f-ini').value;
-    const fim = document.getElementById('f-fim').value;
-    const vendF = (document.getElementById('f-vendedor').value||'').trim();
-    const info = document.getElementById('periodo-info');
+    $('por-vendedor').innerHTML = barras(totaisPorVendedor().map(v=>({nome:v.vendedor, total:v.total, extra:`${v.qtd} frete(s)`})));
+    $('por-loja').innerHTML = barras(lojasArr.map(([l,v])=>({nome:l, total:v})));
+
+    const ini = $('f-ini').value;
+    const fim = $('f-fim').value;
+    const vendF = ($('f-vendedor').value||'').trim();
+    const info = $('periodo-info');
     if(ini || fim || vendF){
-      const lojasNomes = lojasArr.map(l=>l[0]).join(', ') || 'nenhuma';
       const parts = [];
-      if(ini||fim) parts.push(`Período ${ini?fmtData(ini):'início'} a ${fim?fmtData(fim):'hoje'}`);
+      if(ini||fim) parts.push(`${ini?fmtData(ini):'início'} a ${fim?fmtData(fim):'hoje'}`);
       if(vendF) parts.push(`Vendedor: ${vendF}`);
-      info.textContent = `${parts.join(' · ')} → ${fmt(total)} · ${volumeTotal.toLocaleString('pt-BR')} caixas em ${base.length} frete(s) — lojas: ${lojasNomes}`;
+      info.textContent = `${parts.join(' · ')} → ${fmt(total)} · ${volumeTotal.toLocaleString('pt-BR')} caixas em ${base.length} frete(s) · ${lojasArr.length} loja(s)`;
     } else { info.textContent = ''; }
 
-    const max = lojasArr.length ? lojasArr[0][1] : 1;
-    const cont = document.getElementById('por-loja');
-    cont.innerHTML = !lojasArr.length ? '<p class="empty">Nenhum frete no período.</p>' :
-      lojasArr.map(([loja,val])=>{
-        const pct = Math.round((val/max)*100);
-        return `<div class="bar-row"><div class="bar-top"><span class="nm">${esc(loja)}</span><span class="vl">${fmt(val)}</span></div><div class="bar-track"><div class="bar-fill" style="width:${pct}%"></div></div></div>`;
-      }).join('');
-
-    const filtro = document.getElementById('in-filtro').value.toLowerCase();
-    const hist = base.filter(r=>r.loja.toLowerCase().includes(filtro))
-      .slice().sort((a,b)=>(b.data||'').localeCompare(a.data||''));
-    document.getElementById('hist-contador').textContent = hist.length ? `(${hist.length})` : '';
-    const mob = isMobile();
-    const h = document.getElementById('historico');
-    if(!hist.length){ h.innerHTML = '<p class="empty">Sem registros.</p>'; }
-    else {
-      h.innerHTML = `<table><thead><tr>
-        <th style="width:${mob?'26%':'18%'}">Vendedor</th>
-        <th style="width:${mob?'26%':'18%'}">Loja</th>
-        <th style="width:${mob?'24%':'14%'}">Valor</th>
-        ${mob?'':'<th style="width:8%">Vol.</th>'}
-        <th style="width:${mob?'16%':'14%'}">Data</th>
-        ${mob?'':'<th class="obs-col" style="width:20%">Obs.</th>'}
-        <th style="width:${mob?'8%':'6%'}"></th>
-      </tr></thead><tbody>
-      ${hist.map(r=>`<tr>
-        <td style="font-weight:500">${esc(r.vendedor||'—')}</td>
-        <td>${esc(r.loja)}</td>
-        <td>${fmt(r.valor)}</td>
-        ${mob?'':`<td style="color:var(--muted)">${(Number(r.volume)||0).toLocaleString('pt-BR')}</td>`}
-        <td style="color:var(--muted)">${fmtData(r.data)}</td>
-        ${mob?'':`<td class="obs-col" style="color:var(--muted)">${esc(r.obs||'—')}</td>`}
-        <td><button class="del" data-del="${r.id}" aria-label="Excluir">🗑</button></td>
-      </tr>`).join('')}
-      </tbody></table>`;
-      h.querySelectorAll('[data-del]').forEach(b=>{
-        b.onclick = async ()=>{
-          const id = b.getAttribute('data-del');
-          if(db){ await db.from('fretes').delete().eq('id', id); }
-          registros = registros.filter(r=>String(r.id)!==String(id));
-          render();
-        };
-      });
-    }
+    renderHistorico(base);
     renderChart();
   }
 
-  document.getElementById('btn-add').onclick = async ()=>{
-    const vendedor = document.getElementById('in-vendedor').value.trim();
-    const loja = document.getElementById('in-loja').value.trim();
-    const valor = parseFloat(document.getElementById('in-valor').value);
-    const volume = parseInt(document.getElementById('in-volume').value) || 0;
-    const data = document.getElementById('in-data').value;
-    const obs = document.getElementById('in-obs').value.trim();
-    if(!vendedor){ flash('Informe o vendedor', true); return; }
-    if(!loja){ flash('Informe a loja', true); return; }
-    if(!valor || valor<=0){ flash('Informe um valor válido', true); return; }
+  function renderHistorico(base){
+    const filtro = $('in-filtro').value.trim().toLowerCase();
+    const hist = base.filter(r=>!filtro || [r.loja, r.vendedor, r.obs].some(x=>(x||'').toLowerCase().includes(filtro)))
+      .slice().sort((a,b)=>(b.data||'').localeCompare(a.data||'') || (Number(b.id)||0)-(Number(a.id)||0));
+    $('hist-contador').textContent = hist.length ? `(${hist.length})` : '';
+    const h = $('historico');
+    if(!hist.length){ h.innerHTML = '<p class="empty">Nenhum lançamento encontrado.</p>'; return; }
+    const vis = hist.slice(0, limiteHist);
+    const acoes = r => `<div class="row-acoes"><button class="ibtn" data-edit="${esc(r.id)}" title="Editar" aria-label="Editar">✏️</button><button class="ibtn del" data-del="${esc(r.id)}" title="Excluir" aria-label="Excluir">🗑</button></div>`;
+    h.innerHTML = `<div class="tabela-wrap"><table><thead><tr>
+        <th>Data</th><th>Vendedor</th><th>Loja</th><th>Valor</th><th>Vol.</th><th>Obs.</th><th></th>
+      </tr></thead><tbody>
+      ${vis.map(r=>`<tr>
+        <td class="num" style="color:var(--muted)">${fmtData(r.data)}</td>
+        <td><span class="tag">${esc(r.vendedor||'—')}</span></td>
+        <td style="font-weight:600">${esc(r.loja)}</td>
+        <td class="num" style="font-weight:600">${fmt(r.valor)}</td>
+        <td class="num" style="color:var(--muted)">${(Number(r.volume)||0).toLocaleString('pt-BR')}</td>
+        <td class="obs" title="${esc(r.obs||'')}">${esc(r.obs||'—')}</td>
+        <td>${acoes(r)}</td>
+      </tr>`).join('')}
+      </tbody></table></div>
+      <div class="cards-hist">
+      ${vis.map(r=>`<div class="card-frete">
+        <div class="l1"><span class="loja">${esc(r.loja)}</span><span class="valor">${fmt(r.valor)}</span></div>
+        <div class="l2"><span><span class="tag">${esc(r.vendedor||'—')}</span> · ${fmtData(r.data)} · ${(Number(r.volume)||0).toLocaleString('pt-BR')} cx${r.obs?` · ${esc(r.obs)}`:''}</span>${acoes(r)}</div>
+      </div>`).join('')}
+      </div>
+      ${hist.length > limiteHist ? `<button class="mais" id="btn-mais">Mostrar mais (${hist.length - limiteHist} restantes)</button>` : ''}`;
+    const mais = $('btn-mais');
+    if(mais) mais.onclick = ()=>{ limiteHist += 30; renderHistorico(filtrados()); };
+    h.querySelectorAll('[data-del]').forEach(b=>{ b.onclick = ()=>excluir(b.getAttribute('data-del')); });
+    h.querySelectorAll('[data-edit]').forEach(b=>{ b.onclick = ()=>editar(b.getAttribute('data-edit')); });
+  }
+
+  async function excluir(id){
+    const r = registros.find(x=>String(x.id)===String(id));
+    if(!r) return;
+    if(!confirm(`Excluir o frete de ${fmt(r.valor)} da loja ${r.loja} (${fmtData(r.data)})?`)) return;
+    if(db){
+      const { error } = await db.from('fretes').delete().eq('id', id);
+      if(error){ flash('Erro ao excluir', true); return; }
+    }
+    registros = registros.filter(x=>String(x.id)!==String(id));
+    if(String(editandoId)===String(id)) limparForm();
+    flash('Frete excluído');
+    render();
+  }
+
+  function editar(id){
+    const r = registros.find(x=>String(x.id)===String(id));
+    if(!r) return;
+    editandoId = r.id;
+    const sel = $('in-vendedor');
+    if(r.vendedor && ![...sel.options].some(o=>o.value===r.vendedor)){
+      sel.add(new Option(r.vendedor, r.vendedor));
+    }
+    sel.value = r.vendedor || '';
+    $('in-loja').value = r.loja || '';
+    $('in-valor').value = r.valor;
+    $('in-volume').value = Number(r.volume)||'';
+    $('in-data').value = r.data || today();
+    $('in-obs').value = r.obs || '';
+    $('painel-form').classList.add('editando');
+    $('form-titulo').textContent = 'Editar frete';
+    $('form-ico').textContent = '✏️';
+    $('btn-add').textContent = 'Atualizar frete';
+    $('btn-cancelar').style.display = '';
+    $('painel-form').scrollIntoView({behavior:'smooth', block:'start'});
+  }
+
+  function limparForm(){
+    editandoId = null;
+    $('in-vendedor').value='';
+    $('in-loja').value='';
+    $('in-valor').value='';
+    $('in-volume').value='';
+    $('in-obs').value='';
+    $('in-data').value = today();
+    $('painel-form').classList.remove('editando');
+    $('form-titulo').textContent = 'Novo frete';
+    $('form-ico').textContent = '➕';
+    $('btn-add').textContent = 'Salvar frete';
+    $('btn-cancelar').style.display = 'none';
+  }
+
+  $('btn-add').onclick = async ()=>{
+    const vendedor = $('in-vendedor').value.trim();
+    const loja = $('in-loja').value.trim();
+    const valor = parseFloat(String($('in-valor').value).replace(',', '.'));
+    const volume = parseInt($('in-volume').value) || 0;
+    const data = $('in-data').value || today();
+    const obs = $('in-obs').value.trim();
+    if(!vendedor){ flash('Informe o vendedor', true); $('in-vendedor').focus(); return; }
+    if(!loja){ flash('Informe a loja', true); $('in-loja').focus(); return; }
+    if(!valor || valor<=0){ flash('Informe um valor válido', true); $('in-valor').focus(); return; }
     if(!db){ flash('Configure o Supabase primeiro', true); return; }
     const novo = { vendedor, loja, valor, volume, data, obs };
-    const { data:ins, error } = await db.from('fretes').insert([novo]).select();
-    if(error){ flash('Erro ao salvar', true); return; }
-    registros.unshift(ins[0]);
-    document.getElementById('in-vendedor').value='';
-    document.getElementById('in-loja').value='';
-    document.getElementById('in-valor').value='';
-    document.getElementById('in-volume').value='';
-    document.getElementById('in-obs').value='';
-    document.getElementById('in-data').value = today();
-    flash('Frete salvo');
-    render();
+    const btn = $('btn-add');
+    btn.disabled = true;
+    try {
+      if(editandoId !== null){
+        const { data:upd, error } = await db.from('fretes').update(novo).eq('id', editandoId).select();
+        if(error || !upd || !upd.length){ flash('Erro ao atualizar', true); return; }
+        registros = registros.map(r=>String(r.id)===String(editandoId) ? upd[0] : r);
+        flash('Frete atualizado');
+      } else {
+        const { data:ins, error } = await db.from('fretes').insert([novo]).select();
+        if(error){ flash('Erro ao salvar', true); return; }
+        registros.unshift(ins[0]);
+        flash('Frete salvo');
+      }
+      limparForm();
+      render();
+    } finally { btn.disabled = false; }
   };
-  document.getElementById('in-filtro').oninput = render;
-  document.getElementById('in-vendedor').addEventListener('keydown', e=>{ if(e.key==='Enter') document.getElementById('btn-add').click(); });
-  document.getElementById('in-valor').addEventListener('keydown', e=>{ if(e.key==='Enter') document.getElementById('btn-add').click(); });
-  document.getElementById('btn-filtrar').onclick = render;
-  document.getElementById('btn-limpar').onclick = ()=>{
-    document.getElementById('f-ini').value='';
-    document.getElementById('f-fim').value='';
-    document.getElementById('f-vendedor').value='';
-    render();
-  };
-  document.getElementById('f-ini').onchange = render;
-  document.getElementById('f-fim').onchange = render;
-  document.getElementById('f-vendedor').onchange = render;
-  // mostrar/ocultar histórico
-  document.getElementById('btn-toggle-hist').onclick = function(){
-    const w = document.getElementById('hist-wrap');
-    const aberto = w.style.display !== 'none';
-    w.style.display = aberto ? 'none' : 'block';
-    this.textContent = aberto ? 'Ver lançamentos' : 'Ocultar lançamentos';
-  };
-  let rt; window.addEventListener('resize', ()=>{ clearTimeout(rt); rt=setTimeout(render,200); });
+  $('btn-cancelar').onclick = limparForm;
+  ['in-loja','in-valor','in-volume','in-obs'].forEach(id=>{
+    $(id).addEventListener('keydown', e=>{ if(e.key==='Enter') $('btn-add').click(); });
+  });
 
-  document.getElementById('btn-excel').onclick = ()=>{
+  // ---- Filtros ----
+  function marcarChip(p){
+    document.querySelectorAll('#chips .chip').forEach(c=>c.classList.toggle('ativo', c.dataset.periodo===p));
+  }
+  document.querySelectorAll('#chips .chip').forEach(c=>{
+    c.onclick = ()=>{
+      const hoje = new Date();
+      let ini = '', fim = '';
+      switch(c.dataset.periodo){
+        case 'hoje': ini = fim = today(); break;
+        case '7d': { const d=new Date(); d.setDate(d.getDate()-6); ini=isoLocal(d); fim=today(); break; }
+        case 'mes': ini = isoLocal(new Date(hoje.getFullYear(), hoje.getMonth(), 1)); fim = isoLocal(new Date(hoje.getFullYear(), hoje.getMonth()+1, 0)); break;
+        case 'mes-ant': ini = isoLocal(new Date(hoje.getFullYear(), hoje.getMonth()-1, 1)); fim = isoLocal(new Date(hoje.getFullYear(), hoje.getMonth(), 0)); break;
+        case 'ano': ini = `${hoje.getFullYear()}-01-01`; fim = `${hoje.getFullYear()}-12-31`; break;
+      }
+      $('f-ini').value = ini; $('f-fim').value = fim;
+      marcarChip(c.dataset.periodo);
+      limiteHist = 30;
+      render();
+    };
+  });
+  $('btn-limpar').onclick = ()=>{
+    $('f-ini').value=''; $('f-fim').value=''; $('f-vendedor').value='';
+    marcarChip('tudo'); limiteHist = 30;
+    render();
+  };
+  $('f-ini').onchange = ()=>{ marcarChip(null); render(); };
+  $('f-fim').onchange = ()=>{ marcarChip(null); render(); };
+  $('f-vendedor').onchange = render;
+  $('in-filtro').oninput = ()=>{ limiteHist = 30; renderHistorico(filtrados()); };
+  document.addEventListener('tema-mudou', renderChart);
+  let rt, larguraAnt = window.innerWidth;
+  window.addEventListener('resize', ()=>{
+    clearTimeout(rt);
+    rt = setTimeout(()=>{ if(window.innerWidth !== larguraAnt){ larguraAnt = window.innerWidth; renderChart(); } }, 200);
+  });
+
+  // ---- Relatórios ----
+  $('btn-excel').onclick = ()=>{
     const base = filtrados();
-    if(!base.length){ flash('Sem dados', true, 'msg2'); return; }
+    if(!base.length){ flash('Sem dados', true); return; }
     const custoCx = (v,vol)=> (Number(vol)>0 ? Number(v)/Number(vol) : 0);
     const wb = XLSX.utils.book_new();
     const det = [['Vendedor','Loja','Valor (R$)','Volume (caixas)','Custo/caixa (R$)','Data','Observação']];
@@ -540,29 +769,29 @@ const SENHA_APP = "realbrasil01";
     const ws3 = XLSX.utils.aoa_to_sheet(pm); ws3['!cols']=[{wch:12},{wch:14}];
     XLSX.utils.book_append_sheet(wb, ws3, 'Por mês');
     XLSX.writeFile(wb, `registrofacil_${today()}.xlsx`);
-    flash('Excel gerado', false, 'msg2');
+    flash('Excel gerado');
   };
 
-  document.getElementById('btn-pdf').onclick = ()=>{
+  $('btn-pdf').onclick = ()=>{
     const base = filtrados();
-    if(!base.length){ flash('Sem dados', true, 'msg2'); return; }
+    if(!base.length){ flash('Sem dados', true); return; }
     const { jsPDF } = window.jspdf; const doc = new jsPDF();
     const pageW = doc.internal.pageSize.getWidth();
-    const ini = document.getElementById('f-ini').value, fim = document.getElementById('f-fim').value;
+    const ini = $('f-ini').value, fim = $('f-fim').value;
     const total = base.reduce((s,r)=>s+Number(r.valor),0);
     const volumeTotal = base.reduce((s,r)=>s+(Number(r.volume)||0),0);
     const custoMedioCx = volumeTotal>0 ? total/volumeTotal : 0;
     const lojas = totaisPorLoja();
     const ticket = base.length ? total/base.length : 0;
     const topLoja = lojas.length ? `${lojas[0][0]} (${fmt(lojas[0][1])})` : '—';
-    const azul = [35,71,126], azulEsc = [10,26,53], cinza = [120,130,150];
+    const verde = [15,118,110], verdeEsc = [11,59,55], ambar = [217,119,6], cinza = [110,125,120];
 
-    // ---- Cabeçalho azul ----
-    doc.setFillColor(...azulEsc); doc.rect(0, 0, pageW, 30, 'F');
-    doc.setFillColor(...azul); doc.rect(0, 0, 6, 30, 'F');
+    // ---- Cabeçalho ----
+    doc.setFillColor(...verdeEsc); doc.rect(0, 0, pageW, 30, 'F');
+    doc.setFillColor(...ambar); doc.rect(0, 0, 6, 30, 'F');
     doc.setTextColor(255); doc.setFont(undefined,'bold'); doc.setFontSize(18);
     doc.text('RegistroFácil', 14, 14);
-    doc.setFont(undefined,'normal'); doc.setFontSize(10); doc.setTextColor(200,215,255);
+    doc.setFont(undefined,'normal'); doc.setFontSize(10); doc.setTextColor(204,251,241);
     doc.text('Relatório de Fretes', 14, 22);
     const periodoTxt = (ini||fim) ? `Período: ${ini?fmtData(ini):'início'} a ${fim?fmtData(fim):'hoje'}` : 'Período: todos os fretes';
     doc.setFontSize(9); doc.text(periodoTxt, pageW-14, 14, {align:'right'});
@@ -579,40 +808,46 @@ const SENHA_APP = "realbrasil01";
       ['Lojas', String(lojas.length)]
     ];
     const nC = cards.length;
-    const cardW = (pageW - 28 - (nC-1)*5) / nC, gap = 5;
+    const gap = 5, cardW = (pageW - 28 - (nC-1)*gap) / nC;
     cards.forEach((c,i)=>{
       const x = 14 + i*(cardW+gap);
-      doc.setFillColor(238,242,250); doc.roundedRect(x, y, cardW, 20, 2, 2, 'F');
+      doc.setFillColor(232,246,243); doc.roundedRect(x, y, cardW, 20, 2, 2, 'F');
       doc.setTextColor(...cinza); doc.setFontSize(6.5); doc.text(c[0].toUpperCase(), x+2.5, y+7);
-      doc.setTextColor(...azulEsc); doc.setFont(undefined,'bold'); doc.setFontSize(c[1].length>8?8:9.5);
+      doc.setTextColor(...verdeEsc); doc.setFont(undefined,'bold'); doc.setFontSize(c[1].length>8?8:9.5);
       doc.text(c[1], x+2.5, y+15); doc.setFont(undefined,'normal');
     });
     y += 26;
     doc.setTextColor(...cinza); doc.setFontSize(9);
     doc.text(`Loja com maior gasto: ${topLoja}`, 14, y); y += 6;
 
-    // ---- Gráfico embutido ----
+    // ---- Gráfico embutido (sempre em fundo branco, mesmo no tema escuro) ----
     try {
       if(chart){
-        const img = chart.toBase64Image('image/png', 1);
+        const src = chart.canvas;
+        const tmp = document.createElement('canvas');
+        tmp.width = src.width; tmp.height = src.height;
+        const tctx = tmp.getContext('2d');
+        tctx.fillStyle = '#ffffff'; tctx.fillRect(0,0,tmp.width,tmp.height);
+        tctx.drawImage(src, 0, 0);
+        const img = tmp.toDataURL('image/png', 1);
         const titGraf = (ini||fim) ? 'Evolução diária' : 'Evolução mensal';
-        doc.setTextColor(...azulEsc); doc.setFont(undefined,'bold'); doc.setFontSize(11);
+        doc.setTextColor(...verdeEsc); doc.setFont(undefined,'bold'); doc.setFontSize(11);
         doc.text(titGraf, 14, y+2); doc.setFont(undefined,'normal'); y += 5;
-        const imgW = pageW - 28, imgH = imgW * 0.32;
-        doc.addImage(img, 'PNG', 14, y, imgW, imgH);
-        y += imgH + 8;
+        const imgW = pageW - 28, imgH = imgW * (tmp.height / tmp.width);
+        doc.addImage(img, 'PNG', 14, y, imgW, Math.min(imgH, 80));
+        y += Math.min(imgH, 80) + 8;
       }
     } catch(e){ /* se falhar, segue sem o gráfico */ }
 
     const tableOpts = {
-      headStyles:{ fillColor:azul, textColor:255, fontStyle:'bold' },
-      alternateRowStyles:{ fillColor:[244,247,252] },
+      headStyles:{ fillColor:verde, textColor:255, fontStyle:'bold' },
+      alternateRowStyles:{ fillColor:[242,249,247] },
       styles:{ fontSize:8.5, cellPadding:2.5 },
       margin:{ left:14, right:14 }
     };
 
     // ---- Total por vendedor (para abater das vendas) ----
-    doc.setTextColor(...azulEsc); doc.setFont(undefined,'bold'); doc.setFontSize(11);
+    doc.setTextColor(...verdeEsc); doc.setFont(undefined,'bold'); doc.setFontSize(11);
     doc.text('Total de frete por vendedor', 14, y+2); doc.setFont(undefined,'normal'); y += 5;
     doc.autoTable({ startY:y, head:[['Vendedor','Total frete (R$)','Volume (cx)','Nº fretes']],
       body:totaisPorVendedor().map(v=>[v.vendedor, fmt(v.total), v.volume.toLocaleString('pt-BR'), String(v.qtd)]), ...tableOpts });
@@ -635,7 +870,7 @@ const SENHA_APP = "realbrasil01";
     for(let p=1; p<=totalPag; p++){
       doc.setPage(p);
       const ph = doc.internal.pageSize.getHeight();
-      doc.setDrawColor(220,226,238); doc.line(14, ph-12, pageW-14, ph-12);
+      doc.setDrawColor(215,230,226); doc.line(14, ph-12, pageW-14, ph-12);
       doc.setTextColor(...cinza); doc.setFontSize(8); doc.setFont(undefined,'normal');
       doc.text('RegistroFácil — Controle de Fretes', 14, ph-7);
       doc.text(`Página ${p} de ${totalPag}`, pageW-14, ph-7, {align:'right'});
@@ -645,20 +880,20 @@ const SENHA_APP = "realbrasil01";
     const mesArq = MESES[new Date().getMonth()];
     const ano = new Date().getFullYear();
     doc.save(`RegistroFacil_Fretes_${mesArq}${ano}.pdf`);
-    flash('PDF gerado', false, 'msg2');
+    flash('PDF gerado');
   };
 
-  document.getElementById('btn-export').onclick = ()=>{
+  $('btn-export').onclick = ()=>{
     const payload = { _tipo:'registrofacil_banco', _versao:1, exportadoEm:new Date().toISOString(), registros:registros.map(r=>({vendedor:r.vendedor||'',loja:r.loja,valor:Number(r.valor),volume:Number(r.volume)||0,data:r.data,obs:r.obs||''})) };
     const blob = new Blob([JSON.stringify(payload,null,2)], {type:'application/json'});
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a'); a.href=url; a.download=`registrofacil_banco_${today()}.json`; a.click();
     URL.revokeObjectURL(url);
-    flash('Banco exportado', false, 'msg2');
+    flash('Banco exportado');
   };
 
-  document.getElementById('btn-import').onclick = ()=> document.getElementById('file-import').click();
-  document.getElementById('file-import').onchange = (e)=>{
+  $('btn-import').onclick = ()=> $('file-import').click();
+  $('file-import').onchange = (e)=>{
     const file = e.target.files[0]; if(!file) return;
     const reader = new FileReader();
     reader.onload = async ()=>{
@@ -667,15 +902,15 @@ const SENHA_APP = "realbrasil01";
         const novos = Array.isArray(data)?data:data.registros;
         const validos = (novos||[]).filter(r=>r&&r.loja&&typeof r.valor==='number')
           .map(r=>({vendedor:r.vendedor||'', loja:r.loja, valor:r.valor, volume:Number(r.volume)||0, data:r.data||today(), obs:r.obs||''}));
-        if(!validos.length){ flash('Arquivo sem fretes válidos', true, 'msg2'); return; }
-        if(!db){ flash('Configure o Supabase primeiro', true, 'msg2'); return; }
+        if(!validos.length){ flash('Arquivo sem fretes válidos', true); return; }
+        if(!db){ flash('Configure o Supabase primeiro', true); return; }
         if(!confirm(`Importar ${validos.length} fretes para o banco compartilhado?`)) return;
         const { error } = await db.from('fretes').insert(validos);
-        if(error){ flash('Erro ao importar', true, 'msg2'); return; }
+        if(error){ flash('Erro ao importar', true); return; }
         await load();
-        flash(`${validos.length} fretes importados`, false, 'msg2');
-      } catch(err){ flash('Arquivo inválido', true, 'msg2'); }
-      e.target.value='';
+        flash(`${validos.length} fretes importados`);
+      } catch(err){ flash('Arquivo inválido', true); }
+      finally { e.target.value=''; }
     };
     reader.readAsText(file);
   };
