@@ -87,6 +87,7 @@
   .panel h2 .ico{ width:30px; height:30px; border-radius:9px; background:var(--primary-bg); display:inline-flex; align-items:center; justify-content:center; font-size:15px; }
   .layout{ display:grid; grid-template-columns:370px minmax(0,1fr); gap:20px; align-items:start; }
   .sidebar{ position:sticky; top:16px; }
+  .grafico-box{ position:relative; width:100%; height:260px; }
   .duo{ display:grid; grid-template-columns:1fr 1fr; gap:20px; }
   .duo .panel{ margin-bottom:20px; }
 
@@ -123,7 +124,9 @@
   .bar-row:last-child{ margin-bottom:0; }
   .bar-top{ display:flex; justify-content:space-between; font-size:14px; margin-bottom:6px; gap:8px; }
   .bar-top .nm{ font-weight:600; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; display:flex; gap:8px; align-items:center; }
-  .bar-top .pos{ font-size:11px; font-weight:700; color:var(--muted); background:var(--surface2); border-radius:6px; padding:1px 6px; }
+  .bar-top .pos{ font-size:11px; font-weight:700; color:var(--muted); background:var(--surface2); border-radius:6px; padding:1px 0; min-width:28px; text-align:center; flex-shrink:0; }
+  .bar-top .nm span:last-child{ overflow:hidden; text-overflow:ellipsis; }
+  .ver-todas{ width:100%; height:36px; margin-top:14px; font-size:13px; color:var(--primary); }
   .bar-top .vl{ color:var(--muted); white-space:nowrap; font-weight:600; font-size:13px; }
   .bar-track{ height:8px; background:var(--surface2); border-radius:6px; overflow:hidden; }
   .bar-fill{ height:100%; background:var(--grad); border-radius:6px; transition:width .5s ease; }
@@ -173,20 +176,50 @@
     .sidebar{ position:static; }
   }
   @media (max-width:640px){
-    .header{ padding:16px 16px 84px; }
-    .header h1{ font-size:20px; }
+    body{ font-size:14px; }
+    .wrap{ padding:0 12px 40px; }
+    .header{ padding:14px 14px 70px; }
+    .header h1{ font-size:18px; }
     .header p{ display:none; }
-    .saudacao{ margin-top:18px; }
-    .saudacao strong{ font-size:22px; }
-    .stats{ grid-template-columns:1fr 1fr; gap:10px; }
-    .stat.destaque, .stat:last-child{ grid-column:1 / -1; }
-    .stat .val{ font-size:18px; }
+    .logo{ width:40px; height:40px; min-width:40px; font-size:21px; border-radius:12px; }
+    .hbtn{ height:34px; min-width:34px; padding:0 12px; }
+    .saudacao{ margin-top:14px; }
+    .saudacao strong{ font-size:19px; }
+    .saudacao span{ font-size:12.5px; }
+    /* KPIs compactos: total em destaque + 5 em 3 colunas */
+    .stats{ grid-template-columns:repeat(6,1fr); gap:8px; margin:-54px 0 14px; }
+    .stat{ padding:10px 11px; border-radius:14px; grid-column:span 2; }
+    .stat:nth-child(5), .stat:nth-child(6){ grid-column:span 3; }
+    .stat.destaque{ grid-column:1 / -1; padding:14px 16px; }
+    .stat .lbl{ font-size:10px; letter-spacing:.03em; margin-bottom:2px; }
+    .stat .val{ font-size:15px; }
+    .stat.destaque .val{ font-size:24px; }
+    .panel{ padding:14px; margin-bottom:14px; border-radius:16px; }
+    .panel h2{ font-size:14px; margin-bottom:12px; }
+    .panel h2 .ico{ width:26px; height:26px; font-size:13px; }
+    input, select{ height:42px; font-size:16px; }
+    button{ height:42px; }
+    .form{ gap:10px; }
+    .chips{ flex-wrap:nowrap; overflow-x:auto; margin:12px -14px 0; padding:0 14px 2px; scrollbar-width:none; }
+    .chips::-webkit-scrollbar{ display:none; }
+    .chip{ flex-shrink:0; height:30px; font-size:12.5px; }
+    .bar-row{ margin-bottom:10px; }
+    .bar-top{ font-size:13px; margin-bottom:4px; }
+    .bar-top .vl{ font-size:12px; }
+    .bar-track{ height:6px; }
+    /* ordem no celular: lançar frete, painéis, e relatórios por último */
+    .layout{ display:flex; flex-direction:column; gap:0; }
+    .grafico-box{ height:200px; }
+    .sidebar{ display:contents; }
+    #painel-form{ order:1; }
+    .layout main{ order:2; }
+    .painel-relatorios{ order:3; }
     .filtro-bar{ grid-template-columns:1fr 1fr; }
-    .filtro-bar .f-vend{ grid-column:1 / -1; }
-    .filtro-bar .f-btns{ grid-column:1 / -1; display:flex; }
+    .filtro-bar{ gap:10px; }
+    .filtro-bar .f-btns{ display:flex; }
     .filtro-bar .f-btns button{ flex:1; }
     .duo{ grid-template-columns:1fr; gap:0; }
-    .panel{ padding:16px; }
+    .duo .panel{ margin-bottom:14px; }
     .busca{ width:100%; }
     .tabela-wrap{ display:none; }
     .cards-hist{ display:block; }
@@ -288,7 +321,7 @@
         </div>
       </div>
 
-      <div class="panel">
+      <div class="panel painel-relatorios">
         <h2><span class="ico">📄</span>Relatórios e dados</h2>
         <p class="hint">Os relatórios usam os filtros aplicados acima.</p>
         <div class="actions">
@@ -304,7 +337,7 @@
     <main>
       <div class="panel">
         <h2><span class="ico">📈</span><span id="grafico-titulo">Evolução mensal</span></h2>
-        <div style="position:relative; width:100%; height:260px;">
+        <div class="grafico-box">
           <canvas id="grafico" role="img" aria-label="Gráfico de evolução dos fretes"></canvas>
         </div>
       </div>
@@ -424,8 +457,9 @@ const SENHA_APP = "realbrasil01";
   let registros = [];
   let chart = null;
   let editandoId = null;
-  let limiteHist = 30;
   const isMobile = () => window.matchMedia('(max-width:640px)').matches;
+  const PAGINA = () => isMobile() ? 10 : 30;
+  let limiteHist = PAGINA();
   const fmt = n => 'R$ ' + Number(n).toLocaleString('pt-BR', {minimumFractionDigits:2, maximumFractionDigits:2});
   // data local (evita "pular" para o dia seguinte à noite por causa do fuso UTC)
   const isoLocal = d => `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
@@ -482,10 +516,21 @@ const SENHA_APP = "realbrasil01";
     filtrados().forEach(r=>{ if(r.data){ const ym=r.data.slice(0,7); map[ym]=(map[ym]||0)+Number(r.valor); } });
     return Object.entries(map).sort((a,b)=>a[0].localeCompare(b[0]));
   }
+  // agrupa lojas ignorando maiúsculas/espaços ("Nagumo" = "nagumo");
+  // mostra a grafia mais usada. Retorna [nome, total, volume, nº fretes]
+  const chaveLoja = l => String(l||'').trim().replace(/\s+/g,' ').toLocaleLowerCase('pt-BR');
   function totaisPorLoja(){
-    const map = {};
-    filtrados().forEach(r=>{ map[r.loja]=(map[r.loja]||0)+Number(r.valor); });
-    return Object.entries(map).sort((a,b)=>b[1]-a[1]);
+    const g = {};
+    filtrados().forEach(r=>{
+      const k = chaveLoja(r.loja);
+      const x = g[k] || (g[k] = {total:0, vol:0, qtd:0, nomes:{}});
+      x.total += Number(r.valor); x.vol += Number(r.volume)||0; x.qtd++;
+      const n = String(r.loja||'').trim(); x.nomes[n] = (x.nomes[n]||0)+1;
+    });
+    return Object.values(g).map(x=>{
+      const nome = Object.entries(x.nomes).sort((a,b)=>b[1]-a[1])[0][0];
+      return [nome, x.total, x.vol, x.qtd];
+    }).sort((a,b)=>b[1]-a[1]);
   }
   function totaisPorVendedor(){
     const map = {}, vol = {}, cnt = {};
@@ -542,13 +587,27 @@ const SENHA_APP = "realbrasil01";
     });
   }
 
-  function barras(lista){
+  const TOP = 5;
+  const expandido = { 'por-loja':false, 'por-vendedor':false };
+  function barras(lista, alvo, rotulo){
     const max = lista.length ? lista[0].total : 1;
     if(!lista.length) return '<p class="empty">Nenhum frete no período.</p>';
-    return lista.map((x,i)=>{
+    const aberto = expandido[alvo];
+    const vis = aberto ? lista : lista.slice(0, TOP);
+    const botao = lista.length > TOP
+      ? `<button class="ver-todas" data-expandir="${alvo}">${aberto ? 'Mostrar só os 5 primeiros' : `Ver todas as ${lista.length} ${rotulo}`}</button>` : '';
+    return vis.map((x,i)=>{
       const pct = max > 0 ? Math.max(2, Math.round((x.total/max)*100)) : 0;
-      return `<div class="bar-row"><div class="bar-top"><span class="nm"><span class="pos">${i+1}º</span>${esc(x.nome)}</span><span class="vl">${fmt(x.total)}${x.extra?` · ${x.extra}`:''}</span></div><div class="bar-track"><div class="bar-fill" style="width:${pct}%"></div></div></div>`;
-    }).join('');
+      return `<div class="bar-row"><div class="bar-top"><span class="nm"><span class="pos">${i+1}º</span><span>${esc(x.nome)}</span></span><span class="vl">${fmt(x.total)}${x.extra?` · ${x.extra}`:''}</span></div><div class="bar-track"><div class="bar-fill" style="width:${pct}%"></div></div></div>`;
+    }).join('') + botao;
+  }
+
+  function renderRankings(){
+    $('por-vendedor').innerHTML = barras(totaisPorVendedor().map(v=>({nome:v.vendedor, total:v.total, extra:`${v.qtd} frete(s)`})), 'por-vendedor', 'vendedores');
+    $('por-loja').innerHTML = barras(totaisPorLoja().map(([l,v,,q])=>({nome:l, total:v, extra:`${q} frete(s)`})), 'por-loja', 'lojas');
+    document.querySelectorAll('[data-expandir]').forEach(b=>{
+      b.onclick = ()=>{ const a = b.dataset.expandir; expandido[a] = !expandido[a]; renderRankings(); if(!expandido[a]) $(a).closest('.panel').scrollIntoView({block:'nearest'}); };
+    });
   }
 
   function render(){
@@ -564,11 +623,12 @@ const SENHA_APP = "realbrasil01";
     $('stat-qtd').textContent = base.length;
 
     // sugestões de lojas já cadastradas
-    const lojasUnicas = [...new Set(registros.map(r=>r.loja).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'pt-BR'));
+    const porChave = {};
+    registros.forEach(r=>{ if(r.loja){ const k = chaveLoja(r.loja); (porChave[k] = porChave[k] || {})[r.loja.trim()] = ((porChave[k]||{})[r.loja.trim()]||0)+1; } });
+    const lojasUnicas = Object.values(porChave).map(n=>Object.entries(n).sort((a,b)=>b[1]-a[1])[0][0]).sort((a,b)=>a.localeCompare(b,'pt-BR'));
     $('lista-lojas').innerHTML = lojasUnicas.map(l=>`<option value="${esc(l)}"></option>`).join('');
 
-    $('por-vendedor').innerHTML = barras(totaisPorVendedor().map(v=>({nome:v.vendedor, total:v.total, extra:`${v.qtd} frete(s)`})));
-    $('por-loja').innerHTML = barras(lojasArr.map(([l,v])=>({nome:l, total:v})));
+    renderRankings();
 
     const ini = $('f-ini').value;
     const fim = $('f-fim').value;
@@ -615,7 +675,7 @@ const SENHA_APP = "realbrasil01";
       </div>
       ${hist.length > limiteHist ? `<button class="mais" id="btn-mais">Mostrar mais (${hist.length - limiteHist} restantes)</button>` : ''}`;
     const mais = $('btn-mais');
-    if(mais) mais.onclick = ()=>{ limiteHist += 30; renderHistorico(filtrados()); };
+    if(mais) mais.onclick = ()=>{ limiteHist += PAGINA(); renderHistorico(filtrados()); };
     h.querySelectorAll('[data-del]').forEach(b=>{ b.onclick = ()=>excluir(b.getAttribute('data-del')); });
     h.querySelectorAll('[data-edit]').forEach(b=>{ b.onclick = ()=>editar(b.getAttribute('data-edit')); });
   }
@@ -723,19 +783,19 @@ const SENHA_APP = "realbrasil01";
       }
       $('f-ini').value = ini; $('f-fim').value = fim;
       marcarChip(c.dataset.periodo);
-      limiteHist = 30;
+      limiteHist = PAGINA();
       render();
     };
   });
   $('btn-limpar').onclick = ()=>{
     $('f-ini').value=''; $('f-fim').value=''; $('f-vendedor').value='';
-    marcarChip('tudo'); limiteHist = 30;
+    marcarChip('tudo'); limiteHist = PAGINA();
     render();
   };
   $('f-ini').onchange = ()=>{ marcarChip(null); render(); };
   $('f-fim').onchange = ()=>{ marcarChip(null); render(); };
   $('f-vendedor').onchange = render;
-  $('in-filtro').oninput = ()=>{ limiteHist = 30; renderHistorico(filtrados()); };
+  $('in-filtro').oninput = ()=>{ limiteHist = PAGINA(); renderHistorico(filtrados()); };
   document.addEventListener('tema-mudou', renderChart);
   let rt, larguraAnt = window.innerWidth;
   window.addEventListener('resize', ()=>{
@@ -761,8 +821,7 @@ const SENHA_APP = "realbrasil01";
     const wsv = XLSX.utils.aoa_to_sheet(pv); wsv['!cols']=[{wch:20},{wch:18},{wch:16},{wch:10}];
     XLSX.utils.book_append_sheet(wb, wsv, 'Por vendedor');
     const pl = [['Loja','Total (R$)','Volume (caixas)','Custo/caixa (R$)','Nº fretes']];
-    const cnt={}, vol={}; base.forEach(r=>{ cnt[r.loja]=(cnt[r.loja]||0)+1; vol[r.loja]=(vol[r.loja]||0)+(Number(r.volume)||0); });
-    totaisPorLoja().forEach(([l,v])=>pl.push([l,v,vol[l]||0,custoCx(v,vol[l]||0),cnt[l]]));
+    totaisPorLoja().forEach(([l,v,vol,qtd])=>pl.push([l,v,vol,custoCx(v,vol),qtd]));
     const ws2 = XLSX.utils.aoa_to_sheet(pl); ws2['!cols']=[{wch:22},{wch:14},{wch:16},{wch:16},{wch:10}];
     XLSX.utils.book_append_sheet(wb, ws2, 'Por loja');
     const pm = [['Mês','Total (R$)']]; totaisPorMes().forEach(([m,v])=>pm.push([mesLabel(m),v]));
@@ -854,10 +913,9 @@ const SENHA_APP = "realbrasil01";
     y = doc.lastAutoTable.finalY + 8;
 
     // ---- Total por loja (com volume e custo/caixa) ----
-    const volPorLoja = {}; base.forEach(r=>{ volPorLoja[r.loja]=(volPorLoja[r.loja]||0)+(Number(r.volume)||0); });
     const cCx = (v,vol)=> (Number(vol)>0 ? fmt(Number(v)/Number(vol)) : '—');
     doc.autoTable({ startY:y, head:[['Loja','Total (R$)','Volume (cx)','Custo/caixa']],
-      body:lojas.map(([l,v])=>[l,fmt(v),(volPorLoja[l]||0).toLocaleString('pt-BR'),cCx(v,volPorLoja[l]||0)]), ...tableOpts });
+      body:lojas.map(([l,v,vol])=>[l,fmt(v),vol.toLocaleString('pt-BR'),cCx(v,vol)]), ...tableOpts });
     y = doc.lastAutoTable.finalY + 8;
 
     // ---- Lista de fretes ----
