@@ -497,14 +497,43 @@ const SUPABASE_KEY = "sb_publishable_ROVHCpHO-MLqG2vNzfObPA_jwPC4Ysp"; // chave 
     location.reload();
   };
 
-  // se já entrou neste aparelho, abre direto
-  if(!db){ mostrarLogin('App sem configuração do banco.'); }
-  else {
-    db.auth.getSession().then(({ data })=>{
+  // Link de acesso pessoal: ...#entrar=<código>. Abre o app já logado e fica logado.
+  function lerLinkDeAcesso(){
+    const m = location.hash.match(/[#&]entrar=([^&]+)/);
+    if(!m) return null;
+    history.replaceState(null, '', location.pathname + location.search); // tira o código da barra de endereço
+    try {
+      const b64 = m[1].replace(/-/g,'+').replace(/_/g,'/');
+      const txt = decodeURIComponent(escape(atob(b64)));
+      const i = txt.indexOf(':');
+      return i > 0 ? { usuario: txt.slice(0,i), senha: txt.slice(i+1) } : null;
+    } catch(e){ return null; }
+  }
+
+  async function iniciarSessao(){
+    if(!db){ mostrarLogin('App sem configuração do banco.'); return; }
+    const link = lerLinkDeAcesso();
+    try {
+      if(link){
+        await db.auth.signOut().catch(()=>{});
+        const { data, error } = await db.auth.signInWithPassword({ email: link.usuario + DOMINIO_LOGIN, password: link.senha });
+        if(error){
+          inputUsuario.value = link.usuario;
+          mostrarLogin('Este link de acesso não vale mais. Peça um novo ao administrador.');
+          return;
+        }
+        await abrirComSessao(data.user);
+        return;
+      }
+      // se já entrou neste aparelho, abre direto
+      const { data } = await db.auth.getSession();
       if(data && data.session) abrirComSessao(data.session.user);
       else mostrarLogin();
-    }).catch(()=>mostrarLogin('Sem conexão. Verifique a internet e tente de novo.'));
+    } catch(e){ mostrarLogin('Sem conexão. Verifique a internet e tente de novo.'); }
   }
+  iniciarSessao();
+  // link aberto com o app já aberto na mesma aba: recarrega para entrar com ele
+  window.addEventListener('hashchange', ()=>{ if(/[#&]entrar=/.test(location.hash)) location.reload(); });
 
   // ---- App ----
   function iniciarApp(perfil){
@@ -896,16 +925,31 @@ const SUPABASE_KEY = "sb_publishable_ROVHCpHO-MLqG2vNzfObPA_jwPC4Ysp"; // chave 
 
   // ---- Equipe (só admin): criar acesso, trocar senha, remover ----
   let equipe = [];
-  const senhaAleatoria = () => {
+  const senhaAleatoria = (longa) => {
     const l = 'abcdefghjkmnpqrstuvwxyz', d = '23456789', r = n => { const a = new Uint32Array(n); crypto.getRandomValues(a); return [...a]; };
+    if(longa) return r(16).map(x=>(l+d)[x % (l+d).length]).join('');
     return r(4).map(x=>l[x % l.length]).join('') + '-' + r(4).map(x=>d[x % d.length]).join('');
   };
+  const linkDeAcesso = (usuario, senha) => {
+    const cod = btoa(unescape(encodeURIComponent(usuario + ':' + senha))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+    return location.origin + location.pathname + '#entrar=' + cod;
+  };
+  async function enviarLink(usuario, nome, senha){
+    const url = linkDeAcesso(usuario, senha);
+    const texto = `Olá, ${nome}! Este é o seu acesso ao RegistroFácil. Toque no link para entrar (não passe para ninguém):`;
+    if(navigator.share){
+      try { await navigator.share({ title:'RegistroFácil', text:texto, url }); return; } catch(e){ if(e && e.name === 'AbortError') return; }
+    }
+    try { await navigator.clipboard.writeText(url); alert(`Link de acesso de ${nome} copiado!\n\nCole no WhatsApp dele. Quem tiver esse link entra como ${nome}, então mande só para ele.`); }
+    catch(e){ prompt(`Copie o link de acesso de ${nome} e mande só para ele:`, url); }
+  }
   const msgErro = e => (e && e.message) ? e.message : 'Erro';
   function renderEquipe(){
     const el = $('lista-equipe');
     el.innerHTML = equipe.map(p=>`<div class="membro">
         <div class="quem"><strong>${esc(p.nome)}</strong><span>usuário: ${esc(p.usuario)}</span></div>
         <span class="tag ${p.papel==='admin'?'papel-admin':''}">${p.papel==='admin'?'Completo':'Vendedor'}</span>
+        ${p.papel==='vendedor' ? `<button class="ibtn" data-eq-link="${esc(p.usuario)}" data-nome="${esc(p.nome)}" title="Enviar link de acesso" aria-label="Enviar link de acesso para ${esc(p.nome)}">🔗</button>` : ''}
         <button class="ibtn" data-eq-senha="${esc(p.usuario)}" title="Trocar senha" aria-label="Trocar senha de ${esc(p.nome)}">🔑</button>
         ${p.id===perfil.id ? '' : `<button class="ibtn del" data-eq-remover="${esc(p.usuario)}" title="Remover acesso" aria-label="Remover acesso de ${esc(p.nome)}">🗑</button>`}
       </div>`).join('') || '<p class="empty">Ninguém cadastrado.</p>';
@@ -916,6 +960,14 @@ const SUPABASE_KEY = "sb_publishable_ROVHCpHO-MLqG2vNzfObPA_jwPC4Ysp"; // chave 
       const { error } = await db.rpc('admin_trocar_senha', { p_usuario:u, p_senha:nova });
       if(error){ flash(msgErro(error), true); return; }
       alert(`Senha de "${u}" alterada.\n\nNova senha: ${nova}\n\nAnote e passe para a pessoa.`);
+    }; });
+    el.querySelectorAll('[data-eq-link]').forEach(b=>{ b.onclick = async ()=>{
+      const u = b.dataset.eqLink, nome = b.dataset.nome;
+      if(!confirm(`Gerar um link de acesso para ${nome}?\n\nEle toca no link e o app abre já logado, sem digitar senha.\nIsso troca a senha de ${nome} e desconecta os aparelhos dele (o link novo resolve).`)) return;
+      const senha = senhaAleatoria(true);
+      const { error } = await db.rpc('admin_trocar_senha', { p_usuario:u, p_senha:senha });
+      if(error){ flash(msgErro(error), true); return; }
+      await enviarLink(u, nome, senha);
     }; });
     el.querySelectorAll('[data-eq-remover]').forEach(b=>{ b.onclick = async ()=>{
       const u = b.dataset.eqRemover;
@@ -943,6 +995,7 @@ const SUPABASE_KEY = "sb_publishable_ROVHCpHO-MLqG2vNzfObPA_jwPC4Ysp"; // chave 
         const { error } = await db.rpc('admin_criar_usuario', { p_usuario:usuario, p_nome:nome, p_senha:senha, p_papel:papel });
         if(error){ flash(msgErro(error), true); return; }
         alert(`Acesso criado!\n\nUsuário: ${usuario}\nSenha: ${senha}\n\nAnote e passe para ${nome}. Ele pode trocar a senha depois no botão 🔑.`);
+        if(papel === 'vendedor' && confirm(`Quer enviar agora um link para ${nome} entrar sem digitar senha?`)) await enviarLink(usuario, nome, senha);
         $('eq-nome').value = ''; $('eq-usuario').value = ''; delete $('eq-usuario').dataset.mexido;
         $('eq-senha').value = senhaAleatoria(); $('eq-papel').value = 'vendedor';
         load();
