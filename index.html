@@ -236,6 +236,11 @@
   .novo-usuario{ margin-top:12px; border-top:1px solid var(--line); padding-top:12px; }
   .novo-usuario summary{ cursor:pointer; font-weight:600; font-size:14px; color:var(--primary); }
 
+  /* ---- Modo comprador: histórico e gráfico (quantidade), sem totais em R$ ---- */
+  .modo-comprador .so-admin:not(.ve-comprador){ display:none !important; }
+  .modo-comprador .header{ padding-bottom:30px; }
+  @media (max-width:640px){ .modo-comprador .header{ padding-bottom:22px; } }
+
   /* ---- Modo vendedor: só o formulário e os lançamentos de hoje ---- */
   .modo-vendedor .so-admin{ display:none !important; }
   .modo-vendedor .layout{ display:block; max-width:620px; margin:-62px auto 0; position:relative; z-index:2; }
@@ -306,7 +311,7 @@
     Configure suas credenciais do Supabase no topo do arquivo (SUPABASE_URL e SUPABASE_KEY) para ativar o banco compartilhado.
   </div>
 
-  <div class="panel so-admin">
+  <div class="panel so-admin ve-comprador">
     <h2><span class="ico">🔎</span>Filtrar</h2>
     <div class="filtro-bar">
       <div><label for="f-ini">Data inicial</label><input type="date" id="f-ini" /></div>
@@ -358,7 +363,7 @@
 
       <div class="panel so-admin" id="painel-equipe">
         <h2><span class="ico">👥</span>Equipe</h2>
-        <p class="hint">Quem pode entrar no app. Vendedores só lançam fretes e veem os que lançaram no dia.</p>
+        <p class="hint">Quem pode entrar no app. <b>Vendedor</b>: lança no próprio nome e vê só o que lançou no dia. <b>Comprador</b>: lança para qualquer vendedor e vê o histórico dele, sem totais em R$.</p>
         <div id="lista-equipe"><div class="skeleton"></div><div class="skeleton" style="width:70%"></div></div>
         <details class="novo-usuario">
           <summary>➕ Adicionar pessoa</summary>
@@ -366,7 +371,7 @@
             <div><label for="eq-nome">Nome do vendedor *</label><input type="text" id="eq-nome" placeholder="Ex: Lagoa" /></div>
             <div><label for="eq-usuario">Usuário (login) *</label><input type="text" id="eq-usuario" placeholder="Ex: lagoa" autocapitalize="none" autocorrect="off" spellcheck="false" /></div>
             <div><label for="eq-senha">Senha inicial *</label><input type="text" id="eq-senha" autocomplete="off" /></div>
-            <div><label for="eq-papel">Acesso</label><select id="eq-papel"><option value="vendedor">Vendedor (limitado)</option><option value="admin">Completo (vê tudo)</option></select></div>
+            <div><label for="eq-papel">Acesso</label><select id="eq-papel"><option value="vendedor">Vendedor (limitado)</option><option value="comprador">Comprador (lança para os vendedores)</option><option value="admin">Completo (vê tudo)</option></select></div>
           </div>
           <button class="btn-primary" id="eq-criar" style="width:100%; margin-top:12px;">Criar acesso</button>
         </details>
@@ -374,7 +379,7 @@
     </aside>
 
     <main>
-      <div class="panel so-admin">
+      <div class="panel so-admin ve-comprador">
         <h2><span class="ico">📈</span><span id="grafico-titulo">Evolução mensal</span></h2>
         <div class="grafico-box">
           <canvas id="grafico" role="img" aria-label="Gráfico de evolução dos fretes"></canvas>
@@ -395,7 +400,7 @@
       <div class="panel">
         <div class="hist-head">
           <h2><span class="ico">🧾</span><span id="hist-titulo">Lançamentos</span> <span id="hist-contador" style="color:var(--muted); font-weight:500; font-size:13px;"></span></h2>
-           <input type="search" id="in-filtro" class="busca so-admin" placeholder="Buscar loja, vendedor ou obs..." />
+           <input type="search" id="in-filtro" class="busca so-admin ve-comprador" placeholder="Buscar loja, vendedor ou obs..." />
         </div>
         <p class="hint so-vendedor">Aqui aparecem só os fretes que você lançou hoje. Se errou algo, toque em ✏️ para corrigir.</p>
         <div id="historico"><div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div></div>
@@ -538,7 +543,10 @@ const SUPABASE_KEY = "sb_publishable_ROVHCpHO-MLqG2vNzfObPA_jwPC4Ysp"; // chave 
   // ---- App ----
   function iniciarApp(perfil){
   const admin = perfil.papel === 'admin';
-  if(!admin) document.body.classList.add('modo-vendedor');
+  const comprador = perfil.papel === 'comprador';
+  const vendedor = !admin && !comprador;
+  if(vendedor) document.body.classList.add('modo-vendedor');
+  if(comprador) document.body.classList.add('modo-comprador');
 
   const $ = id => document.getElementById(id);
   let registros = [];
@@ -562,7 +570,7 @@ const SUPABASE_KEY = "sb_publishable_ROVHCpHO-MLqG2vNzfObPA_jwPC4Ysp"; // chave 
   // saudação conforme a hora do dia
   (function(){
     const h = new Date().getHours();
-    const quem = admin ? '' : `, ${perfil.nome}`;
+    const quem = admin ? '' : `, ${perfil.nome}`; // vendedor e comprador são chamados pelo nome
     $('saudacao').textContent = h < 12 ? `Bom dia${quem}! ☀️` : h < 18 ? `Boa tarde${quem}! 👋` : `Boa noite${quem}! 🌙`;
     const d = new Date();
     $('saudacao-sub').textContent = d.toLocaleDateString('pt-BR', {weekday:'long', day:'numeric', month:'long', year:'numeric'});
@@ -572,16 +580,18 @@ const SUPABASE_KEY = "sb_publishable_ROVHCpHO-MLqG2vNzfObPA_jwPC4Ysp"; // chave 
   let nomesVendedores = [];
   function montarVendedores(){
     const sel = $('in-vendedor'), fil = $('f-vendedor');
-    if(!admin){
+    if(vendedor){
       sel.innerHTML = `<option value="${esc(perfil.nome)}">${esc(perfil.nome)}</option>`;
       sel.value = perfil.nome; sel.disabled = true;
       return;
     }
-    const nomes = [...new Set([...nomesVendedores, ...registros.map(r=>r.vendedor).filter(Boolean)])]
-      .sort((a,b)=>a.localeCompare(b,'pt-BR'));
+    const ordenar = l => [...new Set(l)].sort((a,b)=>a.localeCompare(b,'pt-BR'));
+    // comprador só pode lançar para vendedores cadastrados; no filtro aparecem também os nomes dos fretes antigos
+    const nomesForm = comprador ? ordenar(nomesVendedores) : ordenar([...nomesVendedores, ...registros.map(r=>r.vendedor).filter(Boolean)]);
+    const nomesFiltro = ordenar([...nomesVendedores, ...registros.map(r=>r.vendedor).filter(Boolean)]);
     const atualSel = sel.value, atualFil = fil.value;
-    sel.innerHTML = '<option value="">Selecione...</option>' + nomes.map(n=>`<option value="${esc(n)}">${esc(n)}</option>`).join('');
-    fil.innerHTML = '<option value="">Todos</option>' + nomes.map(n=>`<option value="${esc(n)}">${esc(n)}</option>`).join('');
+    sel.innerHTML = '<option value="">Selecione...</option>' + nomesForm.map(n=>`<option value="${esc(n)}">${esc(n)}</option>`).join('');
+    fil.innerHTML = '<option value="">Todos</option>' + nomesFiltro.map(n=>`<option value="${esc(n)}">${esc(n)}</option>`).join('');
     sel.value = atualSel; fil.value = atualFil;
   }
 
@@ -595,17 +605,19 @@ const SUPABASE_KEY = "sb_publishable_ROVHCpHO-MLqG2vNzfObPA_jwPC4Ysp"; // chave 
   }
 
   async function load(){
-    // admin recebe todos os fretes; o vendedor recebe do banco só os que ele lançou hoje
-    const [fretes, lojas, perfis] = await Promise.all([
-      db.from('fretes').select('*').order(admin ? 'data' : 'created_at', {ascending:false}),
+    // admin recebe todos os fretes; comprador, os dele + os antigos; vendedor, só os que lançou hoje (regra no banco)
+    const [fretes, lojas, perfis, vendComprador] = await Promise.all([
+      db.from('fretes').select('*').order(vendedor ? 'created_at' : 'data', {ascending:false}),
       db.rpc('lojas_cadastradas'),
-      admin ? db.from('perfis').select('id,usuario,nome,papel').order('nome') : Promise.resolve({ data:[] })
+      admin ? db.from('perfis').select('id,usuario,nome,papel').order('nome') : Promise.resolve({ data:[] }),
+      comprador ? db.rpc('nomes_vendedores') : Promise.resolve({ data:[] })
     ]);
     if(fretes.error){ flash('Erro ao carregar do banco', true); registros=[]; }
     else { registros = fretes.data || []; }
     lojasSugestao = (lojas && !lojas.error && lojas.data) ? lojas.data.map(x=>typeof x === 'string' ? x : Object.values(x)[0]) : [];
     equipe = perfis.data || [];
-    nomesVendedores = equipe.filter(p=>p.papel==='vendedor').map(p=>p.nome);
+    nomesVendedores = admin ? equipe.filter(p=>p.papel==='vendedor').map(p=>p.nome)
+      : ((vendComprador && vendComprador.data) || []).map(x=>typeof x === 'string' ? x : Object.values(x)[0]);
     montarVendedores();
     if(admin) renderEquipe();
     render();
@@ -634,9 +646,11 @@ const SUPABASE_KEY = "sb_publishable_ROVHCpHO-MLqG2vNzfObPA_jwPC4Ysp"; // chave 
     });
   }
 
+  // no gráfico: admin soma R$; comprador conta quantos fretes (sem revelar o gasto)
+  const medida = r => comprador ? 1 : Number(r.valor);
   function totaisPorMes(){
     const map = {};
-    filtrados().forEach(r=>{ if(r.data){ const ym=r.data.slice(0,7); map[ym]=(map[ym]||0)+Number(r.valor); } });
+    filtrados().forEach(r=>{ if(r.data){ const ym=r.data.slice(0,7); map[ym]=(map[ym]||0)+medida(r); } });
     return Object.entries(map).sort((a,b)=>a[0].localeCompare(b[0]));
   }
   // agrupa lojas ignorando maiúsculas/espaços ("Nagumo" = "nagumo");
@@ -663,7 +677,7 @@ const SUPABASE_KEY = "sb_publishable_ROVHCpHO-MLqG2vNzfObPA_jwPC4Ysp"; // chave 
   function totaisPorDia(ini, fim){
     // soma por dia
     const map = {};
-    filtrados().forEach(r=>{ if(r.data) map[r.data]=(map[r.data]||0)+Number(r.valor); });
+    filtrados().forEach(r=>{ if(r.data) map[r.data]=(map[r.data]||0)+medida(r); });
     // determina o intervalo: usa o filtro, ou o min/max dos dados
     const chaves = Object.keys(map).sort();
     const dataIni = ini || chaves[0];
@@ -688,7 +702,7 @@ const SUPABASE_KEY = "sb_publishable_ROVHCpHO-MLqG2vNzfObPA_jwPC4Ysp"; // chave 
     const ini = $('f-ini').value;
     const fim = $('f-fim').value;
     const modoDia = !!(ini || fim);
-    $('grafico-titulo').textContent = modoDia ? 'Evolução diária' : 'Evolução mensal';
+    $('grafico-titulo').textContent = (modoDia ? 'Evolução diária' : 'Evolução mensal') + (comprador ? ' (nº de fretes)' : '');
     const dados = modoDia ? totaisPorDia(ini, fim) : totaisPorMes();
     const labels = dados.map(d => modoDia ? diaLabel(d[0]) : mesLabel(d[0]));
     const vals = dados.map(d => Math.round(d[1]*100)/100);
@@ -703,9 +717,9 @@ const SUPABASE_KEY = "sb_publishable_ROVHCpHO-MLqG2vNzfObPA_jwPC4Ysp"; // chave 
       type:'bar',
       data:{ labels, datasets:[{ data:vals, backgroundColor:grad, hoverBackgroundColor:'#f59e0b', borderRadius:8, maxBarThickness:modoDia?30:46 }] },
       options:{ responsive:true, maintainAspectRatio:false,
-        plugins:{ legend:{display:false}, tooltip:{ backgroundColor:'#0f1f1c', padding:10, cornerRadius:8, displayColors:false, callbacks:{ label:c=>'R$ '+c.parsed.y.toLocaleString('pt-BR',{minimumFractionDigits:2}) } } },
+        plugins:{ legend:{display:false}, tooltip:{ backgroundColor:'#0f1f1c', padding:10, cornerRadius:8, displayColors:false, callbacks:{ label:c=> comprador ? `${c.parsed.y} frete(s)` : 'R$ '+c.parsed.y.toLocaleString('pt-BR',{minimumFractionDigits:2}) } } },
         scales:{ x:{ grid:{display:false}, border:{display:false}, ticks:{ color:corTexto, autoSkip:modoDia, maxRotation:45, font:{family:'Inter', size:isMobile()?10:12} } },
-                 y:{ beginAtZero:true, border:{display:false}, grid:{color:escuro?'rgba(255,255,255,.06)':'rgba(15,31,28,.07)'}, ticks:{ color:corTexto, callback:v=>'R$ '+v.toLocaleString('pt-BR'), font:{family:'Inter', size:isMobile()?10:12} } } }
+                 y:{ beginAtZero:true, border:{display:false}, grid:{color:escuro?'rgba(255,255,255,.06)':'rgba(15,31,28,.07)'}, ticks:{ color:corTexto, precision:0, callback:v=> comprador ? v : 'R$ '+v.toLocaleString('pt-BR'), font:{family:'Inter', size:isMobile()?10:12} } } }
       }
     });
   }
@@ -735,12 +749,24 @@ const SUPABASE_KEY = "sb_publishable_ROVHCpHO-MLqG2vNzfObPA_jwPC4Ysp"; // chave 
 
   function render(){
     montarSugestoesLojas();
-    if(!admin){
+    if(vendedor){
       $('hist-titulo').textContent = 'Meus lançamentos de hoje';
       renderHistorico(registros);
       return;
     }
     const base = filtrados();
+    if(comprador){
+      // sem cartões de total, sem rankings: só filtro, gráfico (quantidade) e histórico
+      $('hist-titulo').textContent = 'Meus lançamentos';
+      const ini = $('f-ini').value, fim = $('f-fim').value, vendF = ($('f-vendedor').value||'').trim();
+      const parts = [];
+      if(ini||fim) parts.push(`${ini?fmtData(ini):'início'} a ${fim?fmtData(fim):'hoje'}`);
+      if(vendF) parts.push(`Vendedor: ${vendF}`);
+      $('periodo-info').textContent = parts.length ? `${parts.join(' · ')} → ${base.length} frete(s)` : '';
+      renderHistorico(base);
+      renderChart();
+      return;
+    }
     const total = base.reduce((s,r)=>s+Number(r.valor),0);
     const volumeTotal = base.reduce((s,r)=>s+(Number(r.volume)||0),0);
     const lojasArr = totaisPorLoja();
@@ -839,7 +865,7 @@ const SUPABASE_KEY = "sb_publishable_ROVHCpHO-MLqG2vNzfObPA_jwPC4Ysp"; // chave 
 
   function limparForm(){
     editandoId = null;
-    $('in-vendedor').value = admin ? '' : perfil.nome;
+    $('in-vendedor').value = vendedor ? perfil.nome : '';
     $('in-loja').value='';
     $('in-valor').value='';
     $('in-volume').value='';
@@ -868,7 +894,7 @@ const SUPABASE_KEY = "sb_publishable_ROVHCpHO-MLqG2vNzfObPA_jwPC4Ysp"; // chave 
     try {
       if(editandoId !== null){
         const { data:upd, error } = await db.from('fretes').update(novo).eq('id', editandoId).select();
-        if(error || !upd || !upd.length){ flash(admin ? 'Erro ao atualizar' : 'Só dá para corrigir fretes lançados hoje', true); return; }
+        if(error || !upd || !upd.length){ flash(vendedor ? 'Só dá para corrigir fretes lançados hoje' : 'Erro ao atualizar', true); return; }
         registros = registros.map(r=>String(r.id)===String(editandoId) ? upd[0] : r);
         flash('Frete atualizado');
       } else {
@@ -916,11 +942,11 @@ const SUPABASE_KEY = "sb_publishable_ROVHCpHO-MLqG2vNzfObPA_jwPC4Ysp"; // chave 
   $('f-fim').onchange = ()=>{ marcarChip(null); render(); };
   $('f-vendedor').onchange = render;
   $('in-filtro').oninput = ()=>{ limiteHist = PAGINA(); renderHistorico(filtrados()); };
-  document.addEventListener('tema-mudou', ()=>{ if(admin) renderChart(); });
+  document.addEventListener('tema-mudou', ()=>{ if(!vendedor) renderChart(); });
   let rt, larguraAnt = window.innerWidth;
   window.addEventListener('resize', ()=>{
     clearTimeout(rt);
-    rt = setTimeout(()=>{ if(window.innerWidth !== larguraAnt){ larguraAnt = window.innerWidth; if(admin) renderChart(); } }, 200);
+    rt = setTimeout(()=>{ if(window.innerWidth !== larguraAnt){ larguraAnt = window.innerWidth; if(!vendedor) renderChart(); } }, 200);
   });
 
   // ---- Equipe (só admin): criar acesso, trocar senha, remover ----
@@ -948,8 +974,8 @@ const SUPABASE_KEY = "sb_publishable_ROVHCpHO-MLqG2vNzfObPA_jwPC4Ysp"; // chave 
     const el = $('lista-equipe');
     el.innerHTML = equipe.map(p=>`<div class="membro">
         <div class="quem"><strong>${esc(p.nome)}</strong><span>usuário: ${esc(p.usuario)}</span></div>
-        <span class="tag ${p.papel==='admin'?'papel-admin':''}">${p.papel==='admin'?'Completo':'Vendedor'}</span>
-        ${p.papel==='vendedor' ? `<button class="ibtn" data-eq-link="${esc(p.usuario)}" data-nome="${esc(p.nome)}" title="Enviar link de acesso" aria-label="Enviar link de acesso para ${esc(p.nome)}">🔗</button>` : ''}
+        <span class="tag ${p.papel==='admin'?'papel-admin':''}">${({admin:'Completo', comprador:'Comprador', vendedor:'Vendedor'})[p.papel] || p.papel}</span>
+        ${p.papel!=='admin' ? `<button class="ibtn" data-eq-link="${esc(p.usuario)}" data-nome="${esc(p.nome)}" title="Enviar link de acesso" aria-label="Enviar link de acesso para ${esc(p.nome)}">🔗</button>` : ''}
         <button class="ibtn" data-eq-senha="${esc(p.usuario)}" title="Trocar senha" aria-label="Trocar senha de ${esc(p.nome)}">🔑</button>
         ${p.id===perfil.id ? '' : `<button class="ibtn del" data-eq-remover="${esc(p.usuario)}" title="Remover acesso" aria-label="Remover acesso de ${esc(p.nome)}">🗑</button>`}
       </div>`).join('') || '<p class="empty">Ninguém cadastrado.</p>';
@@ -995,7 +1021,7 @@ const SUPABASE_KEY = "sb_publishable_ROVHCpHO-MLqG2vNzfObPA_jwPC4Ysp"; // chave 
         const { error } = await db.rpc('admin_criar_usuario', { p_usuario:usuario, p_nome:nome, p_senha:senha, p_papel:papel });
         if(error){ flash(msgErro(error), true); return; }
         alert(`Acesso criado!\n\nUsuário: ${usuario}\nSenha: ${senha}\n\nAnote e passe para ${nome}. Ele pode trocar a senha depois no botão 🔑.`);
-        if(papel === 'vendedor' && confirm(`Quer enviar agora um link para ${nome} entrar sem digitar senha?`)) await enviarLink(usuario, nome, senha);
+        if(papel !== 'admin' && confirm(`Quer enviar agora um link para ${nome} entrar sem digitar senha?`)) await enviarLink(usuario, nome, senha);
         $('eq-nome').value = ''; $('eq-usuario').value = ''; delete $('eq-usuario').dataset.mexido;
         $('eq-senha').value = senhaAleatoria(); $('eq-papel').value = 'vendedor';
         load();
