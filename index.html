@@ -214,6 +214,7 @@
     #painel-form{ order:1; }
     .layout main{ order:2; }
     .painel-relatorios{ order:3; }
+    #painel-equipe{ order:4; }
     .filtro-bar{ grid-template-columns:1fr 1fr; }
     .filtro-bar{ gap:10px; }
     .filtro-bar .f-btns{ display:flex; }
@@ -225,14 +226,39 @@
     .cards-hist{ display:block; }
   }
 
+  /* ---- Equipe ---- */
+  .membro{ display:flex; align-items:center; gap:10px; padding:9px 0; border-top:1px solid var(--line); }
+  .membro:first-child{ border-top:none; }
+  .membro .quem{ flex:1; min-width:0; }
+  .membro .quem strong{ display:block; font-size:14px; }
+  .membro .quem span{ font-size:12px; color:var(--muted); }
+  .papel-admin{ background:var(--accent-bg); color:var(--accent); }
+  .novo-usuario{ margin-top:12px; border-top:1px solid var(--line); padding-top:12px; }
+  .novo-usuario summary{ cursor:pointer; font-weight:600; font-size:14px; color:var(--primary); }
+
+  /* ---- Modo comprador: histórico e gráfico (quantidade), sem totais em R$ ---- */
+  .modo-comprador .so-admin:not(.ve-comprador){ display:none !important; }
+  .modo-comprador .header{ padding-bottom:30px; }
+  @media (max-width:640px){ .modo-comprador .header{ padding-bottom:22px; } }
+
+  /* ---- Modo vendedor: só o formulário e os lançamentos de hoje ---- */
+  .modo-vendedor .so-admin{ display:none !important; }
+  .modo-vendedor .layout{ display:block; max-width:620px; margin:-62px auto 0; position:relative; z-index:2; }
+  .modo-vendedor .sidebar{ position:static; }
+  .so-vendedor{ display:none; }
+  .modo-vendedor .so-vendedor{ display:block; }
+  .modo-vendedor select:disabled{ opacity:1; background-image:none; cursor:default; background-color:var(--surface2); font-weight:600; }
+  @media (max-width:640px){ .modo-vendedor .layout{ margin-top:-54px; } }
+
   /* ---- Tela de login ---- */
+  body:not(.logado) .header, body:not(.logado) .wrap{ visibility:hidden; }
   .lock{ position:fixed; inset:0; background:var(--hero); display:flex; align-items:center; justify-content:center; z-index:1000; padding:20px; }
   .lock::before{ content:''; position:absolute; inset:0; background-image:radial-gradient(rgba(255,255,255,.08) 1px, transparent 1px); background-size:22px 22px; }
   .lock-card{ position:relative; background:var(--surface); border-radius:22px; padding:34px 28px; width:100%; max-width:370px; box-shadow:var(--shadow-lg); text-align:center; }
   .lock-logo{ width:66px; height:66px; border-radius:18px; background:var(--grad); display:flex; align-items:center; justify-content:center; font-size:34px; margin:0 auto 18px; box-shadow:var(--shadow-lg); }
   .lock-card h1{ font-size:22px; font-weight:800; margin:0 0 6px; letter-spacing:-.02em; }
   .lock-card p{ font-size:14px; color:var(--muted); margin:0 0 22px; }
-  .lock-card input{ text-align:center; margin-bottom:14px; }
+  .lock-card input{ text-align:center; margin-bottom:12px; }
   .lock-card button{ width:100%; }
   .lock-erro{ font-size:13px; color:var(--danger); font-weight:600; margin:12px 0 0 !important; min-height:18px; }
 </style>
@@ -243,7 +269,8 @@
   <div class="lock-card">
     <div class="lock-logo">🚚</div>
     <h1>RegistroFácil</h1>
-    <p>Digite a senha de acesso para continuar.</p>
+    <p>Entre com seu usuário e senha.</p>
+    <input type="text" id="lock-usuario" placeholder="Usuário" autocomplete="username" autocapitalize="none" autocorrect="off" spellcheck="false" />
     <input type="password" id="lock-senha" placeholder="Senha" autocomplete="current-password" />
     <button class="btn-primary" id="lock-entrar">Entrar</button>
     <p class="lock-erro" id="lock-erro"></p>
@@ -259,6 +286,7 @@
     </div>
     <div class="header-tools">
       <button class="hbtn icon" id="btn-tema" title="Alternar tema claro/escuro" aria-label="Alternar tema">🌙</button>
+      <button class="hbtn icon" id="btn-senha" title="Trocar minha senha" aria-label="Trocar minha senha">🔑</button>
       <button class="hbtn" id="btn-sair">Sair</button>
     </div>
   </div>
@@ -270,7 +298,7 @@
 
 <div class="wrap">
 
-  <div class="stats">
+  <div class="stats so-admin">
     <div class="stat destaque"><div class="lbl">💰 Total em fretes</div><div class="val" id="stat-total">R$ 0,00</div></div>
     <div class="stat"><div class="lbl">📦 Volume</div><div class="val" id="stat-volume">0</div></div>
     <div class="stat"><div class="lbl">📐 Custo/caixa</div><div class="val" id="stat-custo">R$ 0,00</div></div>
@@ -283,12 +311,12 @@
     Configure suas credenciais do Supabase no topo do arquivo (SUPABASE_URL e SUPABASE_KEY) para ativar o banco compartilhado.
   </div>
 
-  <div class="panel">
+  <div class="panel so-admin ve-comprador">
     <h2><span class="ico">🔎</span>Filtrar</h2>
     <div class="filtro-bar">
       <div><label for="f-ini">Data inicial</label><input type="date" id="f-ini" /></div>
       <div><label for="f-fim">Data final</label><input type="date" id="f-fim" /></div>
-      <div class="f-vend"><label for="f-vendedor">Vendedor</label><select id="f-vendedor"><option value="">Todos</option><option value="Warley">Warley</option><option value="Pedro">Pedro</option><option value="Ricardo">Ricardo</option><option value="Alemão">Alemão</option></select></div>
+      <div class="f-vend"><label for="f-vendedor">Vendedor</label><select id="f-vendedor"><option value="">Todos</option></select></div>
       <div class="f-btns"><button id="btn-limpar">Limpar filtros</button></div>
     </div>
     <div class="chips" id="chips">
@@ -308,7 +336,7 @@
         <h2><span class="ico" id="form-ico">➕</span><span id="form-titulo">Novo frete</span></h2>
         <p class="modo-edicao">✏️ Editando um frete já lançado. Salve para atualizar ou cancele.</p>
         <div class="form">
-          <div class="full"><label for="in-vendedor">Vendedor *</label><select id="in-vendedor"><option value="">Selecione...</option><option value="Warley">Warley</option><option value="Pedro">Pedro</option><option value="Ricardo">Ricardo</option><option value="Alemão">Alemão</option></select></div>
+          <div class="full"><label for="in-vendedor">Vendedor *</label><select id="in-vendedor"><option value="">Selecione...</option></select></div>
           <div class="full"><label for="in-loja">Loja *</label><input type="text" id="in-loja" placeholder="Ex: Nagumo" list="lista-lojas" autocomplete="off" /><datalist id="lista-lojas"></datalist></div>
           <div><label for="in-valor">Valor (R$) *</label><input type="number" id="in-valor" placeholder="0,00" step="0.01" min="0" inputmode="decimal" /></div>
           <div><label for="in-volume">Volume (caixas)</label><input type="number" id="in-volume" placeholder="0" step="1" min="0" inputmode="numeric" /></div>
@@ -321,7 +349,7 @@
         </div>
       </div>
 
-      <div class="panel painel-relatorios">
+      <div class="panel painel-relatorios so-admin">
         <h2><span class="ico">📄</span>Relatórios e dados</h2>
         <p class="hint">Os relatórios usam os filtros aplicados acima.</p>
         <div class="actions">
@@ -332,17 +360,33 @@
           <input type="file" id="file-import" accept=".json" style="display:none;" />
         </div>
       </div>
+
+      <div class="panel so-admin" id="painel-equipe">
+        <h2><span class="ico">👥</span>Equipe</h2>
+        <p class="hint">Quem pode entrar no app. <b>Vendedor</b>: lança no próprio nome e vê só o que lançou no dia. <b>Comprador</b>: lança para qualquer vendedor e vê o histórico dele, sem totais em R$.</p>
+        <div id="lista-equipe"><div class="skeleton"></div><div class="skeleton" style="width:70%"></div></div>
+        <details class="novo-usuario">
+          <summary>➕ Adicionar pessoa</summary>
+          <div class="form" style="margin-top:12px;">
+            <div><label for="eq-nome">Nome do vendedor *</label><input type="text" id="eq-nome" placeholder="Ex: Lagoa" /></div>
+            <div><label for="eq-usuario">Usuário (login) *</label><input type="text" id="eq-usuario" placeholder="Ex: lagoa" autocapitalize="none" autocorrect="off" spellcheck="false" /></div>
+            <div><label for="eq-senha">Senha inicial *</label><input type="text" id="eq-senha" autocomplete="off" /></div>
+            <div><label for="eq-papel">Acesso</label><select id="eq-papel"><option value="vendedor">Vendedor (limitado)</option><option value="comprador">Comprador (lança para os vendedores)</option><option value="admin">Completo (vê tudo)</option></select></div>
+          </div>
+          <button class="btn-primary" id="eq-criar" style="width:100%; margin-top:12px;">Criar acesso</button>
+        </details>
+      </div>
     </aside>
 
     <main>
-      <div class="panel">
+      <div class="panel so-admin ve-comprador">
         <h2><span class="ico">📈</span><span id="grafico-titulo">Evolução mensal</span></h2>
         <div class="grafico-box">
           <canvas id="grafico" role="img" aria-label="Gráfico de evolução dos fretes"></canvas>
         </div>
       </div>
 
-      <div class="duo">
+      <div class="duo so-admin">
         <div class="panel">
           <h2><span class="ico">🏪</span>Total por loja</h2>
           <div id="por-loja"><div class="skeleton"></div><div class="skeleton" style="width:70%"></div><div class="skeleton" style="width:50%"></div></div>
@@ -355,9 +399,10 @@
 
       <div class="panel">
         <div class="hist-head">
-          <h2><span class="ico">🧾</span>Lançamentos <span id="hist-contador" style="color:var(--muted); font-weight:500; font-size:13px;"></span></h2>
-          <input type="search" id="in-filtro" class="busca" placeholder="Buscar loja, vendedor ou obs..." />
+          <h2><span class="ico">🧾</span><span id="hist-titulo">Lançamentos</span> <span id="hist-contador" style="color:var(--muted); font-weight:500; font-size:13px;"></span></h2>
+           <input type="search" id="in-filtro" class="busca so-admin ve-comprador" placeholder="Buscar loja, vendedor ou obs..." />
         </div>
+        <p class="hint so-vendedor">Aqui aparecem só os fretes que você lançou hoje. Se errou algo, toque em ✏️ para corrigir.</p>
         <div id="historico"><div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div></div>
       </div>
     </main>
@@ -381,13 +426,6 @@
 const SUPABASE_URL = "https://yojhpmsckyrmauswlgzm.supabase.co";   // ex: https://abcdxyz.supabase.co
 const SUPABASE_KEY = "sb_publishable_ROVHCpHO-MLqG2vNzfObPA_jwPC4Ysp"; // chave publishable (sb_publishable_...) ou anon
 
-/* =================================================================
-   SENHA DE ACESSO DO APP
-   Troque o valor abaixo para mudar a senha que a equipe usa.
-   ================================================================= */
-const SENHA_APP = "realbrasil01";
-/* ================================================================= */
-
 (function(){
   // ---- Tema claro/escuro (lembra a escolha no aparelho) ----
   const TEMA_KEY = 'registrofacil_tema';
@@ -410,48 +448,105 @@ const SENHA_APP = "realbrasil01";
     document.dispatchEvent(new Event('tema-mudou'));
   };
 
-  // ---- Controle de acesso (senha única, lembra no aparelho) ----
-  const AUTH_KEY = 'registrofacil_acesso';
+  // ---- Login individual (usuário + senha) pelo Supabase Auth ----
+  // O usuário digita só o nome (ex.: "lagoa"); por trás vira lagoa@registrofacil.app
+  const DOMINIO_LOGIN = '@registrofacil.app';
+  const configurado = SUPABASE_URL.startsWith("http") && SUPABASE_KEY.length > 20;
+  const db = configurado ? supabase.createClient(SUPABASE_URL, SUPABASE_KEY) : null;
   const lock = document.getElementById('lock');
+  const inputUsuario = document.getElementById('lock-usuario');
   const inputSenha = document.getElementById('lock-senha');
   const erro = document.getElementById('lock-erro');
+  const btnEntrar = document.getElementById('lock-entrar');
 
-  function desbloquear(){
-    lock.style.display = 'none';
-    iniciarApp();
-  }
-  function tentarEntrar(){
-    if(inputSenha.value === SENHA_APP){
-      try { localStorage.setItem(AUTH_KEY, '1'); } catch(e){}
-      desbloquear();
-    } else {
-      erro.textContent = 'Senha incorreta. Tente novamente.';
-      inputSenha.value = '';
-      inputSenha.focus();
+  async function abrirComSessao(user){
+    const { data:perfil, error } = await db.from('perfis').select('*').eq('id', user.id).maybeSingle();
+    if(error || !perfil){
+      await db.auth.signOut();
+      mostrarLogin('Este usuário não tem acesso ao app. Fale com o administrador.');
+      return;
     }
+    lock.style.display = 'none';
+    document.body.classList.add('logado');
+    iniciarApp(perfil);
   }
-  document.getElementById('lock-entrar').onclick = tentarEntrar;
+  function mostrarLogin(msg){
+    lock.style.display = '';
+    erro.textContent = msg || '';
+    setTimeout(()=>(inputUsuario.value ? inputSenha : inputUsuario).focus(), 100);
+  }
+  async function tentarEntrar(){
+    const usuario = inputUsuario.value.trim().toLowerCase();
+    const senha = inputSenha.value;
+    if(!usuario || !senha){ erro.textContent = 'Informe usuário e senha.'; return; }
+    btnEntrar.disabled = true; erro.textContent = '';
+    try {
+      const email = usuario.includes('@') ? usuario : usuario + DOMINIO_LOGIN;
+      const { data, error } = await db.auth.signInWithPassword({ email, password: senha });
+      if(error){
+        erro.textContent = 'Usuário ou senha incorretos.';
+        inputSenha.value = ''; inputSenha.focus();
+        return;
+      }
+      await abrirComSessao(data.user);
+    } catch(e){
+      erro.textContent = 'Sem conexão. Verifique a internet e tente de novo.';
+    } finally { btnEntrar.disabled = false; }
+  }
+  btnEntrar.onclick = tentarEntrar;
+  inputUsuario.addEventListener('keydown', e=>{ if(e.key==='Enter') inputSenha.focus(); });
   inputSenha.addEventListener('keydown', e=>{ if(e.key==='Enter') tentarEntrar(); });
-  document.getElementById('btn-sair').onclick = ()=>{
-    try { localStorage.removeItem(AUTH_KEY); } catch(e){}
+  document.getElementById('btn-sair').onclick = async ()=>{
+    try { await db.auth.signOut(); } catch(e){}
+    try { localStorage.removeItem('registrofacil_acesso'); } catch(e){} // senha antiga
     location.reload();
   };
 
-  // se já passou pela senha neste aparelho, entra direto
-  let jaLiberado = false;
-  try { jaLiberado = localStorage.getItem(AUTH_KEY) === '1'; } catch(e){}
-  if(jaLiberado){ desbloquear(); }
-  else { setTimeout(()=>inputSenha.focus(), 100); }
+  // Link de acesso pessoal: ...#entrar=<código>. Abre o app já logado e fica logado.
+  function lerLinkDeAcesso(){
+    const m = location.hash.match(/[#&]entrar=([^&]+)/);
+    if(!m) return null;
+    history.replaceState(null, '', location.pathname + location.search); // tira o código da barra de endereço
+    try {
+      const b64 = m[1].replace(/-/g,'+').replace(/_/g,'/');
+      const txt = decodeURIComponent(escape(atob(b64)));
+      const i = txt.indexOf(':');
+      return i > 0 ? { usuario: txt.slice(0,i), senha: txt.slice(i+1) } : null;
+    } catch(e){ return null; }
+  }
+
+  async function iniciarSessao(){
+    if(!db){ mostrarLogin('App sem configuração do banco.'); return; }
+    const link = lerLinkDeAcesso();
+    try {
+      if(link){
+        await db.auth.signOut().catch(()=>{});
+        const { data, error } = await db.auth.signInWithPassword({ email: link.usuario + DOMINIO_LOGIN, password: link.senha });
+        if(error){
+          inputUsuario.value = link.usuario;
+          mostrarLogin('Este link de acesso não vale mais. Peça um novo ao administrador.');
+          return;
+        }
+        await abrirComSessao(data.user);
+        return;
+      }
+      // se já entrou neste aparelho, abre direto
+      const { data } = await db.auth.getSession();
+      if(data && data.session) abrirComSessao(data.session.user);
+      else mostrarLogin();
+    } catch(e){ mostrarLogin('Sem conexão. Verifique a internet e tente de novo.'); }
+  }
+  iniciarSessao();
+  // link aberto com o app já aberto na mesma aba: recarrega para entrar com ele
+  window.addEventListener('hashchange', ()=>{ if(/[#&]entrar=/.test(location.hash)) location.reload(); });
 
   // ---- App ----
-  function iniciarApp(){
-  const configurado = SUPABASE_URL.startsWith("http") && SUPABASE_KEY.length > 20;
-  let db = null;
-  if (configurado) {
-    db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-  } else {
-    document.getElementById('config-banner').style.display = 'block';
-  }
+  function iniciarApp(perfil){
+  const admin = perfil.papel === 'admin';
+  const comprador = perfil.papel === 'comprador';
+  const vendedor = !admin && !comprador;
+  if(vendedor) document.body.classList.add('modo-vendedor');
+  if(comprador) document.body.classList.add('modo-comprador');
 
   const $ = id => document.getElementById(id);
   let registros = [];
@@ -475,16 +570,56 @@ const SENHA_APP = "realbrasil01";
   // saudação conforme a hora do dia
   (function(){
     const h = new Date().getHours();
-    $('saudacao').textContent = h < 12 ? 'Bom dia! ☀️' : h < 18 ? 'Boa tarde! 👋' : 'Boa noite! 🌙';
+    const quem = admin ? '' : `, ${perfil.nome}`; // vendedor e comprador são chamados pelo nome
+    $('saudacao').textContent = h < 12 ? `Bom dia${quem}! ☀️` : h < 18 ? `Boa tarde${quem}! 👋` : `Boa noite${quem}! 🌙`;
     const d = new Date();
     $('saudacao-sub').textContent = d.toLocaleDateString('pt-BR', {weekday:'long', day:'numeric', month:'long', year:'numeric'});
   })();
 
+  // listas de vendedores: o admin escolhe qualquer um; o vendedor só lança no próprio nome
+  let nomesVendedores = [];
+  function montarVendedores(){
+    const sel = $('in-vendedor'), fil = $('f-vendedor');
+    if(vendedor){
+      sel.innerHTML = `<option value="${esc(perfil.nome)}">${esc(perfil.nome)}</option>`;
+      sel.value = perfil.nome; sel.disabled = true;
+      return;
+    }
+    const ordenar = l => [...new Set(l)].sort((a,b)=>a.localeCompare(b,'pt-BR'));
+    // comprador só pode lançar para vendedores cadastrados; no filtro aparecem também os nomes dos fretes antigos
+    const nomesForm = comprador ? ordenar(nomesVendedores) : ordenar([...nomesVendedores, ...registros.map(r=>r.vendedor).filter(Boolean)]);
+    const nomesFiltro = ordenar([...nomesVendedores, ...registros.map(r=>r.vendedor).filter(Boolean)]);
+    const atualSel = sel.value, atualFil = fil.value;
+    sel.innerHTML = '<option value="">Selecione...</option>' + nomesForm.map(n=>`<option value="${esc(n)}">${esc(n)}</option>`).join('');
+    fil.innerHTML = '<option value="">Todos</option>' + nomesFiltro.map(n=>`<option value="${esc(n)}">${esc(n)}</option>`).join('');
+    sel.value = atualSel; fil.value = atualFil;
+  }
+
+  // sugestões de lojas (só os nomes, sem valores) vindas do banco
+  let lojasSugestao = [];
+  function montarSugestoesLojas(){
+    const porChave = {};
+    [...lojasSugestao, ...registros.map(r=>r.loja)].forEach(l=>{ if(l){ const k = chaveLoja(l), n = l.trim(); (porChave[k] = porChave[k] || {})[n] = (porChave[k][n]||0)+1; } });
+    const lojasUnicas = Object.values(porChave).map(n=>Object.entries(n).sort((a,b)=>b[1]-a[1])[0][0]).sort((a,b)=>a.localeCompare(b,'pt-BR'));
+    $('lista-lojas').innerHTML = lojasUnicas.map(l=>`<option value="${esc(l)}"></option>`).join('');
+  }
+
   async function load(){
-    if(!db){ render(); return; }
-    const { data, error } = await db.from('fretes').select('*').order('data', {ascending:false});
-    if(error){ flash('Erro ao carregar do banco', true); registros=[]; }
-    else { registros = data || []; }
+    // admin recebe todos os fretes; comprador, os dele + os antigos; vendedor, só os que lançou hoje (regra no banco)
+    const [fretes, lojas, perfis, vendComprador] = await Promise.all([
+      db.from('fretes').select('*').order(vendedor ? 'created_at' : 'data', {ascending:false}),
+      db.rpc('lojas_cadastradas'),
+      admin ? db.from('perfis').select('id,usuario,nome,papel').order('nome') : Promise.resolve({ data:[] }),
+      comprador ? db.rpc('nomes_vendedores') : Promise.resolve({ data:[] })
+    ]);
+    if(fretes.error){ flash('Erro ao carregar do banco', true); registros=[]; }
+    else { registros = fretes.data || []; }
+    lojasSugestao = (lojas && !lojas.error && lojas.data) ? lojas.data.map(x=>typeof x === 'string' ? x : Object.values(x)[0]) : [];
+    equipe = perfis.data || [];
+    nomesVendedores = admin ? equipe.filter(p=>p.papel==='vendedor').map(p=>p.nome)
+      : ((vendComprador && vendComprador.data) || []).map(x=>typeof x === 'string' ? x : Object.values(x)[0]);
+    montarVendedores();
+    if(admin) renderEquipe();
     render();
   }
 
@@ -511,9 +646,11 @@ const SENHA_APP = "realbrasil01";
     });
   }
 
+  // no gráfico: admin soma R$; comprador conta quantos fretes (sem revelar o gasto)
+  const medida = r => comprador ? 1 : Number(r.valor);
   function totaisPorMes(){
     const map = {};
-    filtrados().forEach(r=>{ if(r.data){ const ym=r.data.slice(0,7); map[ym]=(map[ym]||0)+Number(r.valor); } });
+    filtrados().forEach(r=>{ if(r.data){ const ym=r.data.slice(0,7); map[ym]=(map[ym]||0)+medida(r); } });
     return Object.entries(map).sort((a,b)=>a[0].localeCompare(b[0]));
   }
   // agrupa lojas ignorando maiúsculas/espaços ("Nagumo" = "nagumo");
@@ -540,7 +677,7 @@ const SENHA_APP = "realbrasil01";
   function totaisPorDia(ini, fim){
     // soma por dia
     const map = {};
-    filtrados().forEach(r=>{ if(r.data) map[r.data]=(map[r.data]||0)+Number(r.valor); });
+    filtrados().forEach(r=>{ if(r.data) map[r.data]=(map[r.data]||0)+medida(r); });
     // determina o intervalo: usa o filtro, ou o min/max dos dados
     const chaves = Object.keys(map).sort();
     const dataIni = ini || chaves[0];
@@ -565,7 +702,7 @@ const SENHA_APP = "realbrasil01";
     const ini = $('f-ini').value;
     const fim = $('f-fim').value;
     const modoDia = !!(ini || fim);
-    $('grafico-titulo').textContent = modoDia ? 'Evolução diária' : 'Evolução mensal';
+    $('grafico-titulo').textContent = (modoDia ? 'Evolução diária' : 'Evolução mensal') + (comprador ? ' (nº de fretes)' : '');
     const dados = modoDia ? totaisPorDia(ini, fim) : totaisPorMes();
     const labels = dados.map(d => modoDia ? diaLabel(d[0]) : mesLabel(d[0]));
     const vals = dados.map(d => Math.round(d[1]*100)/100);
@@ -580,9 +717,9 @@ const SENHA_APP = "realbrasil01";
       type:'bar',
       data:{ labels, datasets:[{ data:vals, backgroundColor:grad, hoverBackgroundColor:'#f59e0b', borderRadius:8, maxBarThickness:modoDia?30:46 }] },
       options:{ responsive:true, maintainAspectRatio:false,
-        plugins:{ legend:{display:false}, tooltip:{ backgroundColor:'#0f1f1c', padding:10, cornerRadius:8, displayColors:false, callbacks:{ label:c=>'R$ '+c.parsed.y.toLocaleString('pt-BR',{minimumFractionDigits:2}) } } },
+        plugins:{ legend:{display:false}, tooltip:{ backgroundColor:'#0f1f1c', padding:10, cornerRadius:8, displayColors:false, callbacks:{ label:c=> comprador ? `${c.parsed.y} frete(s)` : 'R$ '+c.parsed.y.toLocaleString('pt-BR',{minimumFractionDigits:2}) } } },
         scales:{ x:{ grid:{display:false}, border:{display:false}, ticks:{ color:corTexto, autoSkip:modoDia, maxRotation:45, font:{family:'Inter', size:isMobile()?10:12} } },
-                 y:{ beginAtZero:true, border:{display:false}, grid:{color:escuro?'rgba(255,255,255,.06)':'rgba(15,31,28,.07)'}, ticks:{ color:corTexto, callback:v=>'R$ '+v.toLocaleString('pt-BR'), font:{family:'Inter', size:isMobile()?10:12} } } }
+                 y:{ beginAtZero:true, border:{display:false}, grid:{color:escuro?'rgba(255,255,255,.06)':'rgba(15,31,28,.07)'}, ticks:{ color:corTexto, precision:0, callback:v=> comprador ? v : 'R$ '+v.toLocaleString('pt-BR'), font:{family:'Inter', size:isMobile()?10:12} } } }
       }
     });
   }
@@ -611,7 +748,25 @@ const SENHA_APP = "realbrasil01";
   }
 
   function render(){
+    montarSugestoesLojas();
+    if(vendedor){
+      $('hist-titulo').textContent = 'Meus lançamentos de hoje';
+      renderHistorico(registros);
+      return;
+    }
     const base = filtrados();
+    if(comprador){
+      // sem cartões de total, sem rankings: só filtro, gráfico (quantidade) e histórico
+      $('hist-titulo').textContent = 'Meus lançamentos';
+      const ini = $('f-ini').value, fim = $('f-fim').value, vendF = ($('f-vendedor').value||'').trim();
+      const parts = [];
+      if(ini||fim) parts.push(`${ini?fmtData(ini):'início'} a ${fim?fmtData(fim):'hoje'}`);
+      if(vendF) parts.push(`Vendedor: ${vendF}`);
+      $('periodo-info').textContent = parts.length ? `${parts.join(' · ')} → ${base.length} frete(s)` : '';
+      renderHistorico(base);
+      renderChart();
+      return;
+    }
     const total = base.reduce((s,r)=>s+Number(r.valor),0);
     const volumeTotal = base.reduce((s,r)=>s+(Number(r.volume)||0),0);
     const lojasArr = totaisPorLoja();
@@ -621,12 +776,6 @@ const SENHA_APP = "realbrasil01";
     $('stat-ticket').textContent = base.length ? fmt(total/base.length) : '—';
     $('stat-lojas').textContent = lojasArr.length;
     $('stat-qtd').textContent = base.length;
-
-    // sugestões de lojas já cadastradas
-    const porChave = {};
-    registros.forEach(r=>{ if(r.loja){ const k = chaveLoja(r.loja); (porChave[k] = porChave[k] || {})[r.loja.trim()] = ((porChave[k]||{})[r.loja.trim()]||0)+1; } });
-    const lojasUnicas = Object.values(porChave).map(n=>Object.entries(n).sort((a,b)=>b[1]-a[1])[0][0]).sort((a,b)=>a.localeCompare(b,'pt-BR'));
-    $('lista-lojas').innerHTML = lojasUnicas.map(l=>`<option value="${esc(l)}"></option>`).join('');
 
     renderRankings();
 
@@ -651,7 +800,7 @@ const SENHA_APP = "realbrasil01";
       .slice().sort((a,b)=>(b.data||'').localeCompare(a.data||'') || (Number(b.id)||0)-(Number(a.id)||0));
     $('hist-contador').textContent = hist.length ? `(${hist.length})` : '';
     const h = $('historico');
-    if(!hist.length){ h.innerHTML = '<p class="empty">Nenhum lançamento encontrado.</p>'; return; }
+    if(!hist.length){ h.innerHTML = `<p class="empty">${admin ? 'Nenhum lançamento encontrado.' : 'Você ainda não lançou fretes hoje.'}</p>`; return; }
     const vis = hist.slice(0, limiteHist);
     const acoes = r => `<div class="row-acoes"><button class="ibtn" data-edit="${esc(r.id)}" title="Editar" aria-label="Editar">✏️</button><button class="ibtn del" data-del="${esc(r.id)}" title="Excluir" aria-label="Excluir">🗑</button></div>`;
     h.innerHTML = `<div class="tabela-wrap"><table><thead><tr>
@@ -684,10 +833,8 @@ const SENHA_APP = "realbrasil01";
     const r = registros.find(x=>String(x.id)===String(id));
     if(!r) return;
     if(!confirm(`Excluir o frete de ${fmt(r.valor)} da loja ${r.loja} (${fmtData(r.data)})?`)) return;
-    if(db){
-      const { error } = await db.from('fretes').delete().eq('id', id);
-      if(error){ flash('Erro ao excluir', true); return; }
-    }
+    const { data:apagados, error } = await db.from('fretes').delete().eq('id', id).select('id');
+    if(error || !apagados || !apagados.length){ flash('Não foi possível excluir', true); return; }
     registros = registros.filter(x=>String(x.id)!==String(id));
     if(String(editandoId)===String(id)) limparForm();
     flash('Frete excluído');
@@ -718,7 +865,7 @@ const SENHA_APP = "realbrasil01";
 
   function limparForm(){
     editandoId = null;
-    $('in-vendedor').value='';
+    $('in-vendedor').value = vendedor ? perfil.nome : '';
     $('in-loja').value='';
     $('in-valor').value='';
     $('in-volume').value='';
@@ -741,14 +888,13 @@ const SENHA_APP = "realbrasil01";
     if(!vendedor){ flash('Informe o vendedor', true); $('in-vendedor').focus(); return; }
     if(!loja){ flash('Informe a loja', true); $('in-loja').focus(); return; }
     if(!valor || valor<=0){ flash('Informe um valor válido', true); $('in-valor').focus(); return; }
-    if(!db){ flash('Configure o Supabase primeiro', true); return; }
     const novo = { vendedor, loja, valor, volume, data, obs };
     const btn = $('btn-add');
     btn.disabled = true;
     try {
       if(editandoId !== null){
         const { data:upd, error } = await db.from('fretes').update(novo).eq('id', editandoId).select();
-        if(error || !upd || !upd.length){ flash('Erro ao atualizar', true); return; }
+        if(error || !upd || !upd.length){ flash(vendedor ? 'Só dá para corrigir fretes lançados hoje' : 'Erro ao atualizar', true); return; }
         registros = registros.map(r=>String(r.id)===String(editandoId) ? upd[0] : r);
         flash('Frete atualizado');
       } else {
@@ -796,12 +942,105 @@ const SENHA_APP = "realbrasil01";
   $('f-fim').onchange = ()=>{ marcarChip(null); render(); };
   $('f-vendedor').onchange = render;
   $('in-filtro').oninput = ()=>{ limiteHist = PAGINA(); renderHistorico(filtrados()); };
-  document.addEventListener('tema-mudou', renderChart);
+  document.addEventListener('tema-mudou', ()=>{ if(!vendedor) renderChart(); });
   let rt, larguraAnt = window.innerWidth;
   window.addEventListener('resize', ()=>{
     clearTimeout(rt);
-    rt = setTimeout(()=>{ if(window.innerWidth !== larguraAnt){ larguraAnt = window.innerWidth; renderChart(); } }, 200);
+    rt = setTimeout(()=>{ if(window.innerWidth !== larguraAnt){ larguraAnt = window.innerWidth; if(!vendedor) renderChart(); } }, 200);
   });
+
+  // ---- Equipe (só admin): criar acesso, trocar senha, remover ----
+  let equipe = [];
+  const senhaAleatoria = (longa) => {
+    const l = 'abcdefghjkmnpqrstuvwxyz', d = '23456789', r = n => { const a = new Uint32Array(n); crypto.getRandomValues(a); return [...a]; };
+    if(longa) return r(16).map(x=>(l+d)[x % (l+d).length]).join('');
+    return r(4).map(x=>l[x % l.length]).join('') + '-' + r(4).map(x=>d[x % d.length]).join('');
+  };
+  const linkDeAcesso = (usuario, senha) => {
+    const cod = btoa(unescape(encodeURIComponent(usuario + ':' + senha))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+    return location.origin + location.pathname + '#entrar=' + cod;
+  };
+  async function enviarLink(usuario, nome, senha){
+    const url = linkDeAcesso(usuario, senha);
+    const texto = `Olá, ${nome}! Este é o seu acesso ao RegistroFácil. Toque no link para entrar (não passe para ninguém):`;
+    if(navigator.share){
+      try { await navigator.share({ title:'RegistroFácil', text:texto, url }); return; } catch(e){ if(e && e.name === 'AbortError') return; }
+    }
+    try { await navigator.clipboard.writeText(url); alert(`Link de acesso de ${nome} copiado!\n\nCole no WhatsApp dele. Quem tiver esse link entra como ${nome}, então mande só para ele.`); }
+    catch(e){ prompt(`Copie o link de acesso de ${nome} e mande só para ele:`, url); }
+  }
+  const msgErro = e => (e && e.message) ? e.message : 'Erro';
+  function renderEquipe(){
+    const el = $('lista-equipe');
+    el.innerHTML = equipe.map(p=>`<div class="membro">
+        <div class="quem"><strong>${esc(p.nome)}</strong><span>usuário: ${esc(p.usuario)}</span></div>
+        <span class="tag ${p.papel==='admin'?'papel-admin':''}">${({admin:'Completo', comprador:'Comprador', vendedor:'Vendedor'})[p.papel] || p.papel}</span>
+        ${p.papel!=='admin' ? `<button class="ibtn" data-eq-link="${esc(p.usuario)}" data-nome="${esc(p.nome)}" title="Enviar link de acesso" aria-label="Enviar link de acesso para ${esc(p.nome)}">🔗</button>` : ''}
+        <button class="ibtn" data-eq-senha="${esc(p.usuario)}" title="Trocar senha" aria-label="Trocar senha de ${esc(p.nome)}">🔑</button>
+        ${p.id===perfil.id ? '' : `<button class="ibtn del" data-eq-remover="${esc(p.usuario)}" title="Remover acesso" aria-label="Remover acesso de ${esc(p.nome)}">🗑</button>`}
+      </div>`).join('') || '<p class="empty">Ninguém cadastrado.</p>';
+    el.querySelectorAll('[data-eq-senha]').forEach(b=>{ b.onclick = async ()=>{
+      const u = b.dataset.eqSenha;
+      const nova = prompt(`Nova senha para "${u}" (mínimo 6 caracteres):`, senhaAleatoria());
+      if(nova === null) return;
+      const { error } = await db.rpc('admin_trocar_senha', { p_usuario:u, p_senha:nova });
+      if(error){ flash(msgErro(error), true); return; }
+      alert(`Senha de "${u}" alterada.\n\nNova senha: ${nova}\n\nAnote e passe para a pessoa.`);
+    }; });
+    el.querySelectorAll('[data-eq-link]').forEach(b=>{ b.onclick = async ()=>{
+      const u = b.dataset.eqLink, nome = b.dataset.nome;
+      if(!confirm(`Gerar um link de acesso para ${nome}?\n\nEle toca no link e o app abre já logado, sem digitar senha.\nIsso troca a senha de ${nome} e desconecta os aparelhos dele (o link novo resolve).`)) return;
+      const senha = senhaAleatoria(true);
+      const { error } = await db.rpc('admin_trocar_senha', { p_usuario:u, p_senha:senha });
+      if(error){ flash(msgErro(error), true); return; }
+      await enviarLink(u, nome, senha);
+    }; });
+    el.querySelectorAll('[data-eq-remover]').forEach(b=>{ b.onclick = async ()=>{
+      const u = b.dataset.eqRemover;
+      if(!confirm(`Remover o acesso de "${u}"? Ele não vai conseguir mais entrar. Os fretes que ele já lançou continuam salvos.`)) return;
+      const { error } = await db.rpc('admin_remover_usuario', { p_usuario:u });
+      if(error){ flash(msgErro(error), true); return; }
+      flash('Acesso removido');
+      load();
+    }; });
+  }
+  if(admin){
+    $('eq-senha').value = senhaAleatoria();
+    $('eq-nome').addEventListener('input', ()=>{
+      // sugere o usuário a partir do nome: "João Silva" -> "joao.silva"
+      if($('eq-usuario').dataset.mexido) return;
+      $('eq-usuario').value = $('eq-nome').value.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim().replace(/\s+/g,'.').replace(/[^a-z0-9._-]/g,'');
+    });
+    $('eq-usuario').addEventListener('input', ()=>{ $('eq-usuario').dataset.mexido = '1'; });
+    $('eq-criar').onclick = async ()=>{
+      const nome = $('eq-nome').value.trim(), usuario = $('eq-usuario').value.trim().toLowerCase(), senha = $('eq-senha').value, papel = $('eq-papel').value;
+      if(!nome || !usuario || !senha){ flash('Preencha nome, usuário e senha', true); return; }
+      if(papel === 'admin' && !confirm(`"${nome}" vai ver TODOS os fretes, valores e relatórios. Confirma acesso completo?`)) return;
+      const btn = $('eq-criar'); btn.disabled = true;
+      try {
+        const { error } = await db.rpc('admin_criar_usuario', { p_usuario:usuario, p_nome:nome, p_senha:senha, p_papel:papel });
+        if(error){ flash(msgErro(error), true); return; }
+        alert(`Acesso criado!\n\nUsuário: ${usuario}\nSenha: ${senha}\n\nAnote e passe para ${nome}. Ele pode trocar a senha depois no botão 🔑.`);
+        if(papel !== 'admin' && confirm(`Quer enviar agora um link para ${nome} entrar sem digitar senha?`)) await enviarLink(usuario, nome, senha);
+        $('eq-nome').value = ''; $('eq-usuario').value = ''; delete $('eq-usuario').dataset.mexido;
+        $('eq-senha').value = senhaAleatoria(); $('eq-papel').value = 'vendedor';
+        load();
+      } finally { btn.disabled = false; }
+    };
+  }
+
+  // ---- Trocar a própria senha ----
+  $('btn-senha').onclick = async ()=>{
+    const nova = prompt('Digite a NOVA senha (mínimo 6 caracteres):');
+    if(nova === null) return;
+    if(nova.length < 6){ flash('A senha precisa ter pelo menos 6 caracteres', true); return; }
+    const conf = prompt('Repita a nova senha:');
+    if(conf === null) return;
+    if(conf !== nova){ flash('As senhas não conferem', true); return; }
+    const { error } = await db.auth.updateUser({ password: nova });
+    if(error){ flash('Não foi possível trocar a senha', true); return; }
+    flash('Senha alterada');
+  };
 
   // ---- Relatórios ----
   $('btn-excel').onclick = ()=>{
@@ -961,7 +1200,6 @@ const SENHA_APP = "realbrasil01";
         const validos = (novos||[]).filter(r=>r&&r.loja&&typeof r.valor==='number')
           .map(r=>({vendedor:r.vendedor||'', loja:r.loja, valor:r.valor, volume:Number(r.volume)||0, data:r.data||today(), obs:r.obs||''}));
         if(!validos.length){ flash('Arquivo sem fretes válidos', true); return; }
-        if(!db){ flash('Configure o Supabase primeiro', true); return; }
         if(!confirm(`Importar ${validos.length} fretes para o banco compartilhado?`)) return;
         const { error } = await db.from('fretes').insert(validos);
         if(error){ flash('Erro ao importar', true); return; }
